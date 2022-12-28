@@ -15,3 +15,11 @@ SoftwareDefinedFarm/sdf/eval/
 # Ignore the definitions for a farm for now
 # This could be useful (probably not) in the future.
 SoftwareDefinedFarm/sdf/thefarms/
+
+# Ignoring json files to avoid uploading config credentials on accident.
+*.json
+
+# Ignoring the old waterstress project for now because it is unclear
+# whether it belongs with the open-source version, especially since it
+# involves the Azure cloud credentials
+*waterstress/
