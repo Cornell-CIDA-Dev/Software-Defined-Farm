@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package sdf;
+
+// Used for sending table storage requests
+message TableOperation {
+  string tableName = 1;
+  // The user defined filter
+  string filterString = 2;
+  // A csv string of all the column selectors
+  string selectors = 3; 
+  // The max number of results to return
+  int32 numResults = 4;
+  // The full query string
+  // Useful to return to the client when the storage module
+  // either errors or returns no data for a query that should
+  // have had data.
+  string fullQueryString = 5;
+}
+
+// Used for creating general mappings
+// The mappings can be from sensors to channels
+// or from table columns to their values
+message GenericMap {
+  map <string, string> mapping = 1; 
+}
+
+// Used for sending messages between WaterGuard modules
+message WaterGuardUpdate {
+
+  // The table to be set by the compute module or queried
+  // by the sensor module.
+  // Sent back and forth by the sensor and compute modules
+  string tableName = 1;
+
+  // Any new row keys ready to be queried
+  // These are sent by the sensor module
+  repeated string rowKeys = 2;
+
+  // The possible sensors to channel mappings to select from
+  // These are sent by the sensor module
+  GenericMap possibleSensors = 3;
+
+  // The query specifications for a read call
+  // These are sent by the compute module
+  TableOperation querySpec = 4;
+}
+
+
+message RequestedReadData {
+  // Raw channels are always in string form
+  // Using computed channels messes up the read method for storage
+  // If the requesting module expects floats, it can convert  
+  // the records to float once it receives them
+  repeated GenericMap rows = 1;
+}
+
+enum WriteLocation {
+  WATCH_TABLE = 0;
+  SENSOR_BOX_TABLE = 1;
+}
+
+enum WriteType {
+  REGULAR_WRITE = 0;
+  BATCH_WRITE = 1;
+}
+
+message WriteData {
+  WriteType writeType = 1;
+  WriteLocation location = 2; 
+  repeated GenericMap rows = 3;
+}
+
+// Comment 1: Type defs for configuration, sensor, and compute call backs
+// This allows the use of protobufs for checking the values while
+// Keeping this as a Python enum to introspect on its name for debugging.
+
+// Comment 2: Defining these as protobufs allows for their porting to module
+// implementations of WaterGuard in other languages.
+enum WaterGuardConfigCallBacks {
+  DUMMY_WGCONFIGCB = 0;
+  FINISH_SENSORBOX_CONFIG = 1;
+  PROCESS_WATCHTABLE_PRESENCE = 2;
+  INSERT_LATEST_ROWKEY = 3;
+}
+
+enum WaterGuardSensorCallBacks {
+    SET_TOP_ROW_KEY = 0;
+    QUERY_NEW_ROWKEYS = 1;
+    PROCESS_READ_RESULTS = 2;
+}
+
+enum WaterGuardComputeCallBacks {
+    DUMMY_WGCOMPUTECB = 0;
+    CONFIRM_REGISTRATION = 1;
+}
+
+message TwilioMessage {
+  string body = 1;
+}
