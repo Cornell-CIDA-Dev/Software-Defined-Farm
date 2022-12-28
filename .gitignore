@@ -1,4 +1,17 @@
+# Ignore the old requirements that were common to all projects.
+# The requirements are now customized for each project's dockerfile/reqs file.
 SoftwareDefinedFarm/reqs.txt
+
+# Ignore the prior evaluation ideas/images/PDFs because they are not
+# relevant to the submission (yet)
 SoftwareDefinedFarm/sdf/eval/
+
+# Ignore caches that are generated as files are executed
 *__pycache__/
+
+# Ignore auto-generated info for the package
 *.egg-info/
+
+# Ignore the definitions for a farm for now
+# This could be useful (probably not) in the future.
+SoftwareDefinedFarm/sdf/thefarms/
