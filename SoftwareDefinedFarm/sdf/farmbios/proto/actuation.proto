@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package sdf;
+
+import "shared.proto";
+
+message ActuationRPC {
+
+  ProcedureType procedure = 1;
+
+  // App dependent definition of activate function
+  bytes proc_commands = 2;
+
+}

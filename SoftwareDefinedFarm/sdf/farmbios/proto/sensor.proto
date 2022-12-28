@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package sdf;
+
+import "shared.proto";
+
+message SensorRPC {
+
+  ProcedureType procedure = 1;
+
+  Observer observer = 2;
+
+  // To be defined by the caller that contacts the sensor module.
+  bytes update = 3;
+}

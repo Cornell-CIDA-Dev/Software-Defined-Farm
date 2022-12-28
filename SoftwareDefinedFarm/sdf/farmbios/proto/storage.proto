@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package sdf;
+
+import "shared.proto";
+
+message FileSystem{
+
+  string path = 1;
+}
+
+message ChangeFeed {
+
+  string iterator = 1;
+}
+
+message PubSub{
+
+  Observer subscriber = 1;
+
+  repeated string topics = 2;
+
+}
+
+message MediumType {
+  oneof medium_types {
+    FileSystem sdf_fs = 1;
+    ChangeFeed sdf_feed = 2;
+    PubSub sdf_pub_sub = 3;
+  }
+}
+
+message StorageRPC {
+  ProcedureType procedure = 1;
+
+  // Not assuming how store calls/responses
+  // are structured. 
+  bytes store_args = 2;
+}

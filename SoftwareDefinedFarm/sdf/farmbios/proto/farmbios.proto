@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package sdf;
+
+import "sensor.proto";
+import "storage.proto";
+import "compute.proto";
+import "actuation.proto";
+
+message Callback {
+  string identifier = 1;
+  // Helps in determining if there are more messages
+  // To be received by the dispatcher for the given
+  // callback. If true, the dispatcher can remove the
+  // callback entry in its dictionary
+  bool isFinalResponse = 2;
+}
+
+message FarmBIOSMessage {
+  oneof farmbios_msg_types {
+    SensorRPC sensor = 1;
+    StorageRPC storage = 2;
+    ComputeRPC compute = 3;
+    ActuationRPC actuation = 4;
+  }
+  // Data (if any) to be used for the procedure call
+  // Introspection is to be done by the client
+  bytes data = 5;
+  Callback callback = 6;
+}

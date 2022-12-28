@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package sdf;
+
+enum CallType {
+  // Generic enums
+  READ = 0;   
+  NOTIFY = 1;
+  RUN = 2;
+
+  // Sensor call enums
+  REGISTER = 3;
+
+  // File system call enums
+  WRITE = 4;
+
+  // Change feed call enums
+  GET_CHANGE_FEED = 5;
+  GET_NEXT = 6;
+
+  // Pub sub call enums
+  SUBSCRIBE = 7;
+  PUSH = 8;
+  PULL = 9;
+
+  // Compute call enum
+  RCV_SENSOR_NOTIFICATION = 10;
+  RCV_STORAGE_NOTIFICATION = 11;
+  ANALYTICS = 12;
+
+  // Actuation call enum
+  ACTIVATE = 13;
+}
+
+enum ResponseType {
+  // Generic enums
+  SUCCESS = 0;
+  ERROR = 1;
+
+  // Sensor response enums
+  REGISTER_SUCCESS = 2;
+
+  // Sensor + File System response enums
+  REQUESTED_DATA = 3;
+
+  // Change feed response enums
+  UNKNOWN_ITERATOR = 4;
+  NEXT_ITEM = 5;
+  FEED_ITERATOR = 6;
+
+  // Pub sub response enums
+  SUBSCRIBE_SUCCESS = 7;
+  PUSH_SUCCESS = 8;
+  NO_DATA = 9;
+  TOPIC_UPDATES = 10; // For pull calls
+}
+
+message ProcedureType {
+  oneof procedure_types {
+    CallType call = 1;
+    ResponseType response = 2;
+  }
+}
+
+message Observer {
+  string ip_addr = 1;
+  int32 port = 2;
+}

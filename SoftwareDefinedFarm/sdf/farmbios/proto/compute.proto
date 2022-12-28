@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package sdf;
+
+import "shared.proto";
+
+message ComputeRPC {
+
+  ProcedureType procedure = 1;
+
+  // Not assuming what calls be made
+  // This can be introspected and passed in
+  // a protobuf that is user defined.
+  bytes proc_args = 2;
+
+  // To be defined by the caller that contacts the compute module.
+  bytes update = 3;
+
+}
