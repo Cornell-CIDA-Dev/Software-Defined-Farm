@@ -1,2 +1,4 @@
 SoftwareDefinedFarm/reqs.txt
 SoftwareDefinedFarm/sdf/eval/
+*__pycache__/
+*.egg-info/
