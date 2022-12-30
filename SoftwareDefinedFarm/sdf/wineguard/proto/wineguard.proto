@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package sdf;
+
+
+message Credentials {
+  string subscriptionId = 1;
+  string resourceGroup = 2;
+  string workspaceName = 3;
+}
+
+// The details of an existing dataset in the workspace to be used.
+message Dataset {
+  string trainingFile = 1;
+  string name = 2;
+  // The name to be used by the entry script to refer to the dataset
+  string lookupKey = 3;
+}
+
+// The specs for an environment to create with the necessary packages
+// TODO: After successful runs, we should register the environments
+//       for future re-use
+message Environment {
+  // Decides if to run on the node or submit to Azure ML workspace
+  bool localRun = 1;
+  string name = 2;
+  string reqsPath = 3;
+}
+
+message ExperimentSetup {
+
+  Environment env = 1;
+
+  string experimentName = 2;
+
+  Credentials access = 3;
+
+  Dataset dataset = 4;
+
+  // The next two settings are used in the ScriptRunConfig
+  // The compute cluster under which to submit the experiment
+  string computeCluster = 5;
+  // The script to use as an entry point for the built container
+  string entryScript = 6;
+
+}
+
+message ExperimentResult {
+  string resultSummary = 1;
+}
+
+enum ComputeCallBacks {
+  DUMMY_FIELD = 0;
+  PROCESS_RESULTS = 1;
+}
