@@ -10,8 +10,8 @@ engineering, life, social, and agricultural sciences to solve the most pressing
 questions facing agri-food systems. You can learn more through the below related
 projects/research centers:
 
-- [The Cornell Institute for Digital Agriculture](https://www.digitalagriculture.cornell.edu/ "CIDA website")(or CIDA)
-- [The Center for Research on Programmable Plant Systems](https://cropps.cornell.edu "CROPPS website")(or CROPPS)
+- [The Cornell Institute for Digital Agriculture](https://www.digitalagriculture.cornell.edu/ "CIDA website") (or CIDA)
+- [The Center for Research on Programmable Plant Systems](https://cropps.cornell.edu "CROPPS website") (or CROPPS)
 - [Societal Impact of Farm Networking](https://sites.coecis.cornell.edu/farmnetworkingimpact/ "website for research on farm netowrking")
 
 ### About the repository

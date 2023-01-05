@@ -1,0 +1,46 @@
+# These "per-architecture" images were suggested by IBM Edge Computing
+# team for 64-bit and 32-bit Raspberry Pis.
+# IIRC, the 32-bit version OS are the different version of Raspbian OS.
+# The 64-bit OS are based on the Rasbperry Pi OS that was
+# recently published.
+# The other 64-bit alternative is Ubuntu (https://hub.docker.com/r/arm64v8/ubuntu/)
+FROM arm32v7/ubuntu:20.04
+
+# Get a version of Python 3.8
+RUN apt-get update && apt-get install -y python3.8 python3-pip
+#RUN apt-get install -y python3.6 python3-pip
+
+# Get wget
+#RUN apt-get update
+#RUN apt-get install --fix-missing -y wget
+
+#WORKDIR ../tmp/
+#RUN wget https://www.python.org/ftp/python/3.9.7/Python-3.9.7.tgz
+#RUN tar -xf Python-3.9.7.tgz
+#WORKDIR ../tmp/Python-3.9.7
+#RUN ./configure --enable-optimizations
+#RUN make
+#RUN sudo make altinstall
+
+# Copy the required packages to the container
+COPY req_files/wineguard_packages.txt ../tmp/wineguard_packages.txt
+
+# Install the required packages
+RUN pip install -r ../tmp/wineguard_packages.txt
+
+# Remove the temp directory
+RUN rm -r ../tmp/
+
+# Copy the software for the old package structure
+COPY . /app/SoftwareDefinedFarm/
+
+WORKDIR /app/SoftwareDefinedFarm/
+
+# Install package for local editing
+RUN pip install -e .
+
+# Prepare easy start when logged in via shell
+WORKDIR /app/SoftwareDefinedFarm/sdf/wineguard/
+
+# Run the sleep command for testing
+CMD ["sleep", "1h"]

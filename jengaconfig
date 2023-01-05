@@ -1,0 +1,2 @@
+SDF_WINEGUARD_DOCKERFILE = dockerfiles/WineGuard_4BPi_Test_Dockerfile 
+SDF_WINEGUARD_DEV_DOCKERFILE = dockerfiles/SDF_Wineguard_Dev_Dockerfile 

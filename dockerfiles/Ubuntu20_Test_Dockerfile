@@ -1,0 +1,32 @@
+FROM ubuntu:20.04
+
+# Get a version of Python 3.8
+RUN apt-get update && apt-get install -y python3.8 python3-pip
+
+# Copy the required packages to the container
+COPY requirements.txt ../tmp/requirements.txt
+
+# Install the required packages
+RUN pip install -r ../tmp/requirements.txt
+
+# Remove the temp directory
+RUN rm -r ../tmp/
+
+# Copy the software for the old package structure
+COPY ./data_management_python/ /app/data_management_python/
+
+WORKDIR /app/data_management_python/
+
+# Install package for local editing
+RUN pip install -e .
+
+# Prepare easy start when logged in via shell
+WORKDIR /app/data_management_python/dairymgr/
+
+# Create env variables for mounting data
+# TODO: As needed, change this variable to wherever the data
+#       is mounted into the container.
+ENV DATA_MOUNT /app/usda_stuff/
+
+# Run the sleep command for testing
+CMD ["sleep", "1h"]
