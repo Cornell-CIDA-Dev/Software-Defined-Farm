@@ -9,7 +9,7 @@ from sdf.dairymgr.base.spreadsheet_utils import (get_value, ExcelReader)
 from sdf.dairymgr.proto import dairymgr_pb2 as dairymgr 
 from sdf.dairymgr.proto.generated.vendorone import vendor_one_pb2 as vone
 from sdf.dairymgr.base.global_defs import (FLOOR_MSG_SIZE, CEILING_MSG_SIZE,
-                                           AFI_ROW_COUNTER, Casts) 
+                                           VENDOR_ONE_ROW_COUNTER, Casts) 
 from sdf.utils.universal_base_class import UniversalBase
 
 
@@ -536,7 +536,7 @@ class MilkYieldReader(UniversalBase):
                                                                   174,
                                                                   Casts.INT)
             # Check message size and reinitialize as needed.
-            if counter == AFI_ROW_COUNTER or row == reader.active_sheet.max_row:
+            if counter == VENDOR_ONE_ROW_COUNTER or row == reader.active_sheet.max_row:
                 size = next_milk_yield_batch.ByteSize()
                 if size < FLOOR_MSG_SIZE or size >= CEILING_MSG_SIZE:
                     print('%s: MSG size outside of window: %d' % (self.__class__.__name__, size) )
