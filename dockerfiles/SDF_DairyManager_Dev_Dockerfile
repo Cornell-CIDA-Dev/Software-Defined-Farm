@@ -22,4 +22,4 @@ RUN rm -r ../tmp/
 # and/or the container is recreated.
 
 # Run the sleep command for testing
-CMD ["sleep", "1h"]
+CMD ["sleep", "4h"]
