@@ -121,7 +121,7 @@ class PredictionReader(UniversalBase):
                     size = next_pred_batch.ByteSize()
                     if size < FLOOR_MSG_SIZE or size >= CEILING_MSG_SIZE:
                         print('%s: MSG size outside of window: %d' % (self.__class__.__name__, size) )
-                    # Create a new dairycomp record regardless of window size.
+                    # Create a new vendor two record regardless of window size.
                     # This is based on evidence from preliminary data pushes
                     # which shows that most messages are less than 8KB
                     entry = dairymgr.FarmPCMessage()
