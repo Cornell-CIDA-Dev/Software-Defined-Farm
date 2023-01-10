@@ -1,0 +1,253 @@
+syntax = "proto3";
+
+package dairymgr;
+
+
+message PerCowMilkYieldData {
+  message GroupIdentifier {
+    int32 id = 1;
+    int32 group_today = 2;
+    int32 group_yesterday = 3;
+    bool wrong_group = 4;
+  }
+  GroupIdentifier key = 1;
+
+  message LactionStatus {
+    int32 lactation = 1;
+    int32 dim = 2;
+    string status = 3;
+  }
+  LactionStatus status = 2;
+
+
+  message MilkYield {
+    float daily_yield = 1;
+    float yield_1 = 2;
+    float yield_2 = 3;
+    float yield_3 = 4;
+    float daily_avg_yield = 5;
+    float avg_yield_1 = 6;
+    float avg_yield_2 = 7;
+    float avg_yield_3 = 8;
+    sint32 daily_yield_perc = 10;
+    sint32 yield_dev_1 = 11;
+    sint32 yield_dev_2 = 12;
+    sint32 yield_dev_3 = 13;
+    // Leaving fields 14 - 15 for future frequently used message types.
+    // This is a recommendation from the protobuf implementers.
+    // Because fields 1-15 take 1 byte to encode the type.
+  }
+  MilkYield m_yield = 3;
+
+  message FlowRateFat {
+    float perc_milk_from_weight = 1;
+    float avg_yield_amt = 2;
+    float flow_rate_1 = 3;
+    float flow_rate_2 = 4;
+    float flow_rate_3 = 5;
+    float daily_fat = 6;
+    float daily_fat_perc = 7;
+    float fat_perc_1 = 8;
+    float fat_perc_2 = 9;
+    float fat_perc_3 = 10;
+    float avg_fat_1 = 11;
+    float avg_fat_2 = 12;
+    float avg_fat_3 = 13;
+    float daily_avg_fat_perc = 14;
+    sint32 daily_fat_dev_perc = 15;
+    sint32 fat_dev_perc_1 = 16;
+    sint32 fat_dev_perc_2 = 17;
+    sint32 fat_dev_perc_3 = 18;
+  }
+  FlowRateFat flow_rate_fat = 4;
+
+  message Protein {
+    float daily_protein = 1;
+    float daily_protein_perc = 2;
+    float protein_perc_1 = 3;
+    float protein_perc_2 = 4;
+    float protein_perc_3 = 5;
+    float daily_avg_protein_perc = 6;
+    float avg_protein_1 = 7;
+    float avg_protein_2 = 8;
+    float avg_protein_3 = 9;
+    sint32 daily_protein_dev_perc = 10;
+    sint32 protein_dev_perc_1 = 11;
+    sint32 protein_dev_perc_2 = 12;
+    sint32 protein_dev_perc_3 = 13;
+  }
+  Protein protein = 5;
+
+  message FatOverProtein {
+    float daily_fat_over_protein = 1;
+    float fat_over_protein_1 = 2;
+    float fat_over_protein_2 = 3;
+    float fat_over_protein_3 = 4;
+    float daily_avg_fat_over_protein = 5;
+    float avg_fat_over_protein_1 = 6;
+    float avg_fat_over_protein_2 = 7;
+    float avg_fat_over_protein_3 = 8;
+    sint32 daily_fat_over_protein_dev_perc = 9;
+    sint32 fat_over_protein_dev_perc_1 = 10;
+    sint32 fat_over_protein_dev_perc_2 = 11;
+    sint32 fat_over_protein_dev_perc_3 = 12;
+  }
+  FatOverProtein ft_o_protein = 6;
+
+  message LactationBlood {
+    float daily_lactation_perc = 1;
+    float lactation_perc_1 = 2;
+    float lactation_perc_2 = 3;
+    float lactation_perc_3 = 4;
+    float daily_avg_lactation_perc = 5;
+    float avg_lactation_1 = 6;
+    float avg_lactation_2 = 7;
+    float avg_lactation_3 = 8;
+    sint32 daily_lactation_dev_perc = 9;
+    sint32 lactation_dev_perc_1 = 10;
+    sint32 lactation_dev_perc_2 = 11;
+    sint32 lactation_dev_perc_3 = 12;
+    float daily_lactose = 13;
+    float daily_blood_perc = 14;
+    float blood_perc_1 = 15;
+    float blood_perc_2 = 16;
+    float blood_perc_3 = 17;
+  }
+  LactationBlood lactation_blood = 7;
+
+  message SCC {
+    string daily_scc = 1;
+    string scc_1 = 2;
+    string scc_2 = 3;
+    string scc_3 = 4;
+    string daily_avg_scc = 5;
+    string avg_scc_1 = 6;
+    string avg_scc_2 = 7;
+    string avg_scc_3 = 8;
+  }
+  SCC scc = 8;
+
+  message ProductionRateConduction {
+    float avg_prod_rate = 1;
+    float prod_rate_1 = 2;
+    float prod_rate_2 = 3;
+    float prod_rate_3 = 4;
+    float avg_prod_rate_1 = 5;
+    float avg_prod_rate_2 = 6;
+    float avg_prod_rate_3 = 7;
+    sint32 prod_rate_dev_perc_1 = 8;
+    sint32 prod_rate_dev_perc_2 = 9;
+    sint32 prod_rate_dev_perc_3 = 10;
+    float avg_cond = 11;
+    float cond_1 = 12;
+    float cond_2 = 13;
+    float cond_3 = 14;
+    float avg_cond_1 = 15;
+    float avg_cond_2 = 16;
+    float avg_cond_3 = 17;
+    sint32 cond_dev_perc_1 = 18;
+    sint32 cond_dev_perc_2 = 19;
+    sint32 cond_dev_perc_3 = 20;
+  }
+  ProductionRateConduction prod_rate_cond = 9;
+
+  message AMT {
+    float avg_amt = 1;
+    float amt_1 = 2;
+    float amt_2 = 3;
+    float amt_3 = 4;
+    float avg_amt_1 = 5;
+    float avg_amt_2 = 6;
+    float avg_amt_3 = 7;
+    sint32 amt_dev_perc_1 = 8;
+    sint32 amt_dev_perc_2 = 9;
+    sint32 amt_dev_perc_3 = 10;
+  }
+  AMT amt = 10;
+
+  message Activity {
+    int32 avg_act = 1;
+    int32 activity_1 = 2;
+    int32 activity_2 = 3;
+    int32 activity_3 = 4;
+    int32 avg_act_1 = 5;
+    int32 avg_act_2 = 6;
+    int32 avg_act_3 = 7;
+    sint32 activ_last_dev_perc = 8;
+    sint32 activ_dev_perc_1 = 9;
+    sint32 activ_dev_perc_2 = 10;
+    sint32 activ_dev_perc_3 = 11;
+  }
+  Activity vone_activity = 11;
+
+  message RestTime {
+    int32 rest_time_1 = 1;
+    int32 rest_time_2 = 2;
+    int32 rest_time_3 = 3;
+    int32 avg_rest_time_1 = 4;
+    int32 avg_rest_time_2 = 5;
+    int32 avg_rest_time_3 = 6;
+    sint32 rest_time_dev_1 = 7;
+    sint32 rest_time_dev_2 = 8;
+    sint32 rest_time_dev_3 = 9;
+    int32 rest_ratio_1 = 10;
+    int32 rest_ratio_2 = 11;
+    int32 rest_ratio_3 = 12;
+    int32 avg_rest_ratio_1 = 13;
+    int32 avg_rest_ratio_2 = 14;
+    int32 avg_rest_ratio_3 = 15;
+    sint32 rest_ratio_dev_1 = 16;
+    sint32 rest_ratio_dev_2 = 17;
+    sint32 rest_ratio_dev_3 = 18;
+    int32 rest_over_bout_1 = 19;
+    int32 rest_over_bout_2 = 20;
+    int32 rest_over_bout_3 = 21;
+    int32 avg_rest_over_bout_1 = 22;
+    int32 avg_rest_over_bout_2 = 23;
+    int32 avg_rest_over_bout_3 = 24;
+    sint32 rest_over_bout_dev_1 = 25;
+    sint32 rest_over_bout_dev_2 = 26;
+    sint32 rest_over_bout_dev_3 = 27;
+    float rest_over_restlessness_1 = 28;
+    float rest_over_restlessness_2 = 29;
+    float rest_over_restlessness_3 = 30;
+    float avg_rest_over_restl_1 = 31;
+    float avg_rest_over_restl_2 = 32;
+    float avg_rest_over_restl_3 = 33;
+    sint32 rest_over_restless_dev_1 = 34;
+    sint32 rest_over_restless_dev_2 = 35;
+    sint32 rest_over_restless_dev_3 = 36;
+  }
+  RestTime rest = 12;
+
+  message Weight {
+    int32 weight = 1;
+    int32 avg_weight = 2;
+    int32 weight_1 = 3;
+    int32 weight_2 = 4;
+    int32 weight_3 = 5;
+    int32 avg_weight_1 = 6;
+    int32 avg_weight_2 = 7;
+    int32 avg_weight_3 = 8;
+    sint32 weight_last_dev = 9;
+    sint32 weight_dev_1 = 10;
+    sint32 weight_dev_2 = 11;
+    sint32 weight_dev_3 = 12;
+    int32 weigh_in_cav = 13;
+    int32 prev_1_weight = 14;
+    float loss_of_weight = 15;
+    sint32 perc_loss_of_weight = 16;
+    int32 weight_in_breeding = 17;
+  }
+  Weight weight_stats = 13;
+}
+
+message PerFileMilkData {
+  repeated PerCowMilkYieldData entries = 1;
+}
+
+message VendorOneEntry {
+ // This might turn into a one_of in the future if we add more vendor one data types.
+ PerFileMilkData milk = 1;
+ string filename = 2;
+}

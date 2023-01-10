@@ -1,0 +1,25 @@
+FROM ubuntu:20.04
+
+# Get a version of Python 3.8
+RUN apt-get update && apt-get install -y python3.8 python3-pip
+
+# Copy the required packages to the container
+COPY req_files/dairymgr_requirements.txt ../tmp/dairymgr_requirements.txt
+
+# Install the required packages
+RUN pip install -r ../tmp/dairymgr_requirements.txt
+
+# Remove the temp directory
+RUN rm -r ../tmp/
+
+# NOTE: The dev image does not copy the code
+# This enables making changes while testing in the same container
+# The only two inconveniences are:
+# (1) the working directory for the container cannot be set to dairymgr
+# because it is mounted when the container is created and/or run
+# (2) The sdf package has to be reinstalled in edit mode
+# (i.e. pip install -e .) every time the image is rebuilt
+# and/or the container is recreated.
+
+# Run the sleep command for testing
+CMD ["sleep", "4h"]

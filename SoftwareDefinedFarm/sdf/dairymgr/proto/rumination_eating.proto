@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package dairymgr;
+
+message RuminationEatingHourly {
+    float hourlyRumination = 1;
+    float hourlyEating = 2;
+    string observationTime = 3;
+    float hourlyOther = 4;
+    string otherObservationTime = 5;
+    int32 localId = 6;
+}
+
+message RuminationEatingHourlyV2 {
+    float hourlyRumination = 1;
+    float hourlyEating = 2;
+    string observationTime = 3;
+    float hourlyOther = 4;
+    string otherObservationTime = 5;
+    string hourComplete = 6;
+    string alertProcessed = 7;
+    int32 localId = 8;
+}
+
+message RuminationEatingDaily {
+    float dailyRumination = 1;
+    float dailyEating = 2;
+    float dailyOther = 3;
+    string observationTime = 4;
+    int32 localId = 5;
+}
+
+message AllCowsRuminationEatingHourly {
+    repeated RuminationEatingHourly allCowsRuminating = 1;
+}
+
+message AllCowsRuminationEatingHourlyV2 {
+    repeated RuminationEatingHourlyV2 allCowsRuminating = 1;
+}
+
+message AllCowsRuminationEatingDaily {
+    repeated RuminationEatingDaily allCowsRuminating = 1;
+}
+
+message RuminationEatingRecord {
+    oneof ruminationTypes {
+        AllCowsRuminationEatingHourly hourly = 1;
+        AllCowsRuminationEatingHourlyV2 hourlyV2 = 2;
+        AllCowsRuminationEatingDaily daily = 3;
+    }
+}

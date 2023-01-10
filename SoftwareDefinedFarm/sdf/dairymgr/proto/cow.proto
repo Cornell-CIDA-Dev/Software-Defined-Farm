@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+message Cow {
+  float id = 1;
+  message Date {
+    float date = 1;
+    message Session {
+      float id = 1;
+      float yield_gr = 2;
+      float conductivity = 3 ;
+      float amt = 4 ;
+      float fat = 5 ;
+      float protein = 6 ;
+      float lactose = 7 ;
+      float blood = 8 ;
+      float scc = 9 ;
+    }
+    repeated Session session_msg = 2; 
+  }
+  repeated Date date_msg = 2;
+}
+
+message MilkData {
+  repeated Cow cow = 1;
+}

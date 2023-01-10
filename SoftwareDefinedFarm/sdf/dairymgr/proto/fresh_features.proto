@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+
+package dairymgr;
+
+
+import "shared_messages.proto";
+
+
+message PerCowFreshFeatureData {
+    RecordIdentifier key = 1;
+
+    string shon = 2;
+
+    string shoff = 3;
+
+    string bolus = 4;
+
+    // Days in milk?
+    int32 dim = 5;
+
+    // Fresh date 
+    string fdat = 6;
+
+    // b-something date?
+    string bdat = 7;
+
+    int32 ageda = 8;
+
+    // Age at first calving in days
+    int32 afcda = 9;
+
+    //  Month of freshening/calving 
+    string mosfh = 10;
+
+    CalvingData calving = 11; 
+
+    message LactationData {
+        // Previous lactation?
+        int32 pl = 1;
+        // Previous lactation days in milk
+        int32 pdmi = 2;
+    }
+    LactationData lactData = 12;
+
+    GestationData gestation = 13;
+}
+
+message PerFileFreshFeatureData {
+    repeated PerCowFreshFeatureData allFreshEntries = 1;
+}

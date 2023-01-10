@@ -40,7 +40,8 @@ This project has benefited from funding from the National Science Foundation
 [1955125](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1955125&HistoricalAwards=false)
 [1922551](https://www.nsf.gov/awardsearch/showAward?AWD\_ID=1922551&HistoricalAwards=false]),
 and [2019674](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2019674&HistoricalAwards=false),
-a [Microsoft Investigator Fellowship](https://www.microsoft.com/en-us/research/academic-program/microsoft-investigator-fellowship/fellowship-recipients/).
+a [Microsoft Investigator Fellowship](https://www.microsoft.com/en-us/research/academic-program/microsoft-investigator-fellowship/fellowship-recipients/), USDA AFRI-NIFA under project #2017-67015-26772,
+and New York Farm Viability Institute under project #017-014.
 Further, the project has benefited from technical guidance and cloud computing
 resources from Microsoft.
 

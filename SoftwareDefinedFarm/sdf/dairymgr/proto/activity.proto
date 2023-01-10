@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package dairymgr;
+
+
+message DailyCowActivity {
+    message Activity {
+        int32 localId = 1;
+        string observationTime = 2;
+        int32 activity = 3;
+    }
+    repeated Activity activityEntries = 1;
+}

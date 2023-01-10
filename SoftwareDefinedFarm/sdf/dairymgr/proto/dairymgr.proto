@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package dairymgr;
+
+import "vendor_one.proto";
+import "vendor_two.proto";
+import "vendor_three.proto";
+
+message FarmPCMessage {
+    oneof farmpc_types {
+        VendorOneEntry vendorOne = 1;
+        VendorTwoEntry vendorTwo = 2;
+        VendorThreeEntry vendorThree = 3;
+    }
+}
+
+// Comment 1: Type defs for configuration, sensor, and compute call backs
+// This allows the use of protobufs for checking the values while
+// Keeping this as a Python enum to introspect on its name for debugging.
+
+// Comment 2: Defining these as protobufs allows for their porting to module
+// implementations of CowsOnFitbits in other languages.
+enum DairyMgrSensorCallBacks {
+  CALL_ZERO_HERE = 0;
+  CALL_ONE_HERE = 1;
+}
+
+enum DairyMgrComputeCallBacks {
+  CONFIRM_REGISTRATION = 0;
+  PROCESS_READ_DATA = 1;
+}

@@ -1,0 +1,4 @@
+# Had to upgrade from 3.0.0 because that version has trouble with enums
+protobuf==3.11.3
+openpyxl
+factory-boy==2.12.0

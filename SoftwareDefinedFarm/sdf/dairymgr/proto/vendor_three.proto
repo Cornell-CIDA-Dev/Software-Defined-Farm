@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package dairymgr;
+
+import "activity.proto";
+import "rumination_eating.proto";
+
+message VendorThreeEntry {
+    oneof vendorthree_types {
+        DailyCowActivity activity = 1;
+        RuminationEatingRecord rumination =  2;
+    }
+    string filename = 3;
+} 

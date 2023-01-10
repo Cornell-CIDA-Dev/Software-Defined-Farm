@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package dairymgr;
+
+message PerPenData {
+    // Pen number
+    int32 byPen = 1;
+    // Pct
+    int32 pct = 2;
+    // Count
+    int32 count = 3;
+    // AvSTLCT
+    int32 avgstlct = 4;
+    // Daily Average Occupancy
+    int32 avPencp = 5;
+}
+
+message PerFilePenCapacityData {
+    repeated PerPenData all_pens = 1;
+}

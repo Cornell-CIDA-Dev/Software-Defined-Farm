@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package dairymgr;
+
+import "shared_messages.proto";
+
+message PerCowHistoricalData {
+    RecordIdentifier key = 1;
+
+    //  Month of freshening/calving 
+    string mosfh = 3;
+
+    CalvingData calving = 4;
+
+    GestationData gestation = 5;
+    
+    message PLFatMilkProtein {
+       // Milk production recorded 
+       float totm = 1;
+       // Bufferfat production recorded
+       float totf = 2;
+       // Protein production recorded 
+       float totp = 3;
+    }
+    PLFatMilkProtein fatMilkProtein = 6;
+
+    // Number of times inseminated
+    int32 tbrd = 7;
+
+
+    message PLSpecificHealthEvents {
+        // Number of metritis 
+        int32 tmet = 1;
+        // No desc. provided, replaced metabolic or digestive disorders
+        int32 trp = 2;
+        // Number of ketosis
+        int32 nket = 3;
+        //Ketosis after 30 DIM
+        int32 ket30 = 4;
+        // Num of ket within 30 DIM
+        int32 kt030 = 5;
+        // Number of indigestion events.
+        int32 nindig = 6;
+        // Indigestion after 30 DIM
+        int32 idg30 = 7;
+        // Indigestion within first 30 DIM
+        int32 id030 = 8; 
+        // Number of DA's
+        int32 nda = 9;
+        // DA's after 30 DIM
+        int32 da30 = 10;
+        // DA's within first 30 DIM
+        int32 da030 = 11;
+    }
+    PLSpecificHealthEvents specificHealthEvents = 8;
+
+    message PLClicalMastisEvents {
+        // Number of clinical mastitis events
+        int32 nmast = 1;
+        // Clinical mastitis events within 30 DIM
+        int32 mt030 = 2;
+        // Clinical mastitis events after 30 DIM
+        int32 mtt30 = 3;
+    }
+    PLClicalMastisEvents mastitisEvents = 9;
+
+    message PLLameEvents {
+        // Number of lame events recorded
+        int32 nlame = 1;
+        // Lame events within 30 DIM
+        int32 lm030 = 2;
+        // Lame events after 30 DIM
+        int32 lmn30 = 3;
+    }
+    PLLameEvents lameEvents = 10;
+
+    message PLHealthEvents {
+        // Health event
+        bool pldz_all = 1;
+        // Number of health events
+        int32 pl_dz_n = 2;
+        // Health events within 30 DIM
+        bool pldz_30 = 3;
+        // Number of health events within 30 DIM
+        int32 pl_dz30_n = 4;
+        // Health events after 30 DIM
+        bool pldz_31_dry = 5;
+        // Number of health events after 30 DIM
+        int32 pl_dz31_dry_n = 6; 
+    }
+    PLHealthEvents generalHealthEvents = 11; 
+}
+
+message PerFileHistoricalData {
+    repeated PerCowHistoricalData allHistEntries = 1;
+}
