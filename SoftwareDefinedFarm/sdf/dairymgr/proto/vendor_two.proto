@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package dairymgr;
+
+import "historical.proto";
+import "prediction.proto";
+import "pencap.proto";
+import "fresh_features.proto";
+
+message VendorTwoEntry {
+    oneof vendortwo_types {
+        PerFilePenCapacityData pen_cap = 1;
+        PerFileHistoricalData historical = 2;
+        PerFilePredictionData prediction = 3;
+        PerFileFreshFeatureData fresh_features = 4;
+    }
+    string filename = 5;
+}         

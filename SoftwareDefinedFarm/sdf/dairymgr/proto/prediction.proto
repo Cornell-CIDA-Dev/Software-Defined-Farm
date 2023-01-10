@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+
+package dairymgr;
+
+
+import "shared_messages.proto";
+
+
+message PerCowPredictionData {
+    RecordIdentifier key = 1;
+
+    // Date of enrollment in the study
+    string shon = 2;
+
+    // Date when neck tag was removed from cow
+    string shoff = 3;
+
+    // Days in milk?
+    int32 dim = 4;
+
+    // Fresh date 
+    string fdat = 5;
+
+    // birth date
+    string bdat = 6;
+
+    int32 ageda = 7;
+
+    message PLHealthEvents {
+        // Number of mastitis
+        int32 nmast = 1;
+        // Number of lame events
+        int32 nlame = 2;
+        // Number of retained placenta
+	int32 trp = 3;
+        // Number of metritis
+	int32 tmet = 4;
+        // Number of ketosis
+	int32 nket = 5;
+	// Number of indigestion events.
+	int32 nindig = 6;
+	// Number of DA's
+	int32 nda = 7;
+    }
+    PLHealthEvents observedHealthEvents = 8;
+}
+
+message PerFilePredictionData {
+    repeated PerCowPredictionData allPredEntries = 1;
+}

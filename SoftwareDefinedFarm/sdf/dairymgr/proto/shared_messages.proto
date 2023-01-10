@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package dairymgr;
+
+// Except for the pen number, theses are shared among
+// Vendor Two processors except pen cap
+message RecordIdentifier {
+    int32 id = 1;
+    int32 lact = 2;
+    int32 pen = 3;
+}
+
+// Gestation data
+message GestationData {
+    //Total days in close-up pen
+    int32 prefr = 1;
+    //Date moved into close-up pen
+    string cu = 2;
+    //Days dry
+    int32 ddry = 3;
+    // Due date
+    string due = 4;
+    // Calving interval in days
+    int32 cint = 5;
+    // Gestation length
+    int32 pdcc = 6;
+    // Previous fresh date
+    string pfdat = 7;
+    // Previous conception date
+    string pcdat = 8;
+    // Days open (not pregnant)
+    int32 pdopn = 9;
+    // Infectious mastitis previously diagnosed
+    // In file: Any not(0/1) = 0, where 0:False, 1:True
+    bool blues = 10;
+    // Ease of pregnancy: 1 unaided to 5 c-section
+    int32 ease = 11;
+}
+
+message CalvingData {
+    // Number of pairs of twins
+    int32 twns = 1;
+    // Total number of calves born
+    //int32 ncalf = 2;
+    // Numbers of calves born dead
+    int32 deadc = 2;
+    // Number of female calves 
+    int32 casex = 3;
+    // Number of calves born alive
+    int32 cadoa = 4;
+    // Dry date
+    string ddat = 5;
+}

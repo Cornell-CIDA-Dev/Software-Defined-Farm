@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package dairymgr;
+
+
+message DairyMgrSensorUpdate {
+ string sensorName = 1;
+ string updatePath = 2;
+ double updateTimestamp = 3;
+}
