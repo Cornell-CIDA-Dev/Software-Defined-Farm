@@ -6,7 +6,7 @@ from typing import Any
 
 # Local packages
 from sdf.compute.base_compute import ComputeModule
-from sdf.eval.utils.timer import Timer
+from sdf.utils.timer import Timer
 from sdf.farmbios.helpers import get_farmbios_message
 from sdf.farmbios.proto.compute_pb2 import ComputeRPC
 from sdf.farmbios.proto.farmbios_pb2 import FarmBIOSMessage
@@ -104,19 +104,23 @@ class WineGuardCompute(ComputeModule):
            previously uploaded training data.
            :param message: The message from the wire.
         """
-        timer = Timer("Analtics Experiment")
-        timer.start()
+        # Unpack the arguments
         args = ExperimentSetup()
         args.ParseFromString(message.compute.proc_args)
         self.log("\nExperiment setup \n %s" % args)
 
-        self.ml_workspace = self.get_workspace(args) 
-        self.log("ANALYTICS TYPE %s\n" % args.env.localRun)
+        timer = Timer("Analytics Experiment: " + args.experimentName)
+        timer.start()
+
+        # Retrieve the workspace to be used for the experiment
+        # Normally uncommented to get the Azure ML workspace.
+        #self.ml_workspace = self.get_workspace(args)
+        self.log("LOCAL ANALYTICS REQESTED: %s\n" % args.env.localRun)
         #if args.env != None and args.env.localRun == True:
 
         # To be used for testing
         result = ""
-        if args.env != None and args.env.localRun == True:
+        if args.env != None and args.env.localRun == False:
 
             # Check if the training data file is already local.
             training_file = args.dataset.trainingFile

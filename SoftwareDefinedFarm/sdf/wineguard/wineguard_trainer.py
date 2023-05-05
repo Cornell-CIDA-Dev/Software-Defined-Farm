@@ -7,7 +7,7 @@ from typing import Any, Dict
 
 # Local packages
 from sdf.compute.base_compute import ComputeModule
-from sdf.eval.utils.timer import Timer
+from sdf.utils.timer import Timer
 from sdf.farmbios.base_handler import BaseRPCHandler 
 from sdf.farmbios.proto.compute_pb2 import ComputeRPC
 from sdf.farmbios.proto.farmbios_pb2 import FarmBIOSMessage

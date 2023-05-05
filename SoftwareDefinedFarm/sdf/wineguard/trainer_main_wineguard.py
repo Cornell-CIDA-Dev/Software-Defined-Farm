@@ -5,7 +5,7 @@ from time import sleep
 
 # Local packages
 from sdf.utils.user_input import parse_main_args, create_request
-from sdf.eval.utils.timer import Timer
+from sdf.utils.timer import Timer
 from sdf.farmbios.dispatcher import Dispatcher
 from sdf.farmbios.compute_handler import ComputeRPCHandler
 from sdf.helper_typedefs import Modules as mod
@@ -30,11 +30,11 @@ def run_experiments(num, module):
     for index in range(num):
         experiment_number = index + 1
         experiment_name = "Edge Wineguard Experiment: " + str(experiment_number)
-        #timer = Timer(timer_name)
+        timer = Timer(timer_name)
         print(experiment_name)
-        #timer.start()
+        timer.start()
         module.analytics()
-        #timer.stop()
+        timer.stop()
         print("Sleeping for %d seconds\n" % TEN_SECONDS)
         sleep(TEN_SECONDS)
 
