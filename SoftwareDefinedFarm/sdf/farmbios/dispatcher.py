@@ -14,6 +14,7 @@ from sdf.farmbios.proto.storage_pb2 import StorageRPC
 from sdf.farmbios.proto.shared_pb2 import ResponseType
 from sdf.helper_typedefs import CallBackRecord, Modules as mod, OutgoingMessage
 from sdf.network.network_manager import NetworkManager
+from sdf.network.status import CommunicationStatus as comstatus
 from sdf.sensors.base_sensor import SensorModule
 from sdf.utils.threaded_universal_base_class import ThreadedUniversalBase 
 
