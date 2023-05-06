@@ -1,0 +1,24 @@
+FROM ubuntu:20.04
+
+# Get a version of Python 3.8
+RUN apt-get update && apt-get install -y python3.8 python3-pip
+
+# Copy all the required packages to the container
+COPY req_files/atc_eval_requirements.txt ../tmp/atc_eval_requirements.txt
+
+# Install the required packages
+RUN pip install -r ../tmp/atc_eval_requirements.txt
+
+# Remove the temp directory
+RUN rm -r ../tmp/
+
+# Copy and install the sdf package
+COPY . /app/SoftwareDefinedFarm
+WORKDIR /app/SoftwareDefinedFarm
+RUN pip install -e .
+
+# Move to the Dairy Manager directory
+WORKDIR /app/SoftwareDefinedFarm/sdf/dairymgr
+
+# Run the sleep command for testing
+CMD ["sleep", "4h"]

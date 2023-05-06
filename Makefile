@@ -12,4 +12,7 @@ sdf-dairymanager-dev-image:
 sdf-dairymanager-test-image:
 	docker build -t $(OPEN_DAIRYMGR_TEST_IMAGE) -f $(SDF_DAIRYMGR_DOCKERFILE) ./SoftwareDefinedFarm
 
+sdf-atc-artifact-eval-image:
+	docker build -t $(SDF_ATC_ARTIFACT_EVAL_IMAGE) -f $(SDF_ATC_ARTIFACT_EVAL_DOCKERFILE) ./SoftwareDefinedFarm
+
 default: sdf-wineguard-dev-image
