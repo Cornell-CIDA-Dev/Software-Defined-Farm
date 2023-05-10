@@ -18,7 +18,7 @@ WORKDIR /app/SoftwareDefinedFarm
 RUN pip install -e .
 
 # Move to the Dairy Manager directory
-WORKDIR /app/SoftwareDefinedFarm/sdf/dairymgr
+WORKDIR /app/SoftwareDefinedFarm/sdf/
 
 # Run the sleep command for testing
 CMD ["sleep", "4h"]
