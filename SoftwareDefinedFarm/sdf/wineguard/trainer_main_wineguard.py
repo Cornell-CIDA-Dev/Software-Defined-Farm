@@ -1,11 +1,12 @@
 # System packages
 from json import loads
 from time import sleep
+from signal import signal, SIGINT
 
 
 # Local packages
 from sdf.utils.user_input import parse_main_args, create_request
-from sdf.eval.utils.timer import Timer
+#from sdf.eval.utils.timer import Timer
 from sdf.farmbios.dispatcher import Dispatcher
 from sdf.farmbios.compute_handler import ComputeRPCHandler
 from sdf.helper_typedefs import Modules as mod
@@ -81,6 +82,9 @@ if __name__ == "__main__":
 
     # Set the dispacher's network manager.
     dispatcher.set_network_manager(net_ctrl.net_mgr)
+
+    # Set teh signal handler for the "main" trainer module.
+    signal(SIGINT, trainer_module.signal_handler)
 
     # Sleep a bit before starting analytics
     sleep(TEN_SECONDS)

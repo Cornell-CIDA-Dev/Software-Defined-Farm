@@ -2,11 +2,12 @@
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
+from time import sleep
 
 
 # Local packages
 from sdf.compute.base_compute import ComputeModule
-from sdf.eval.utils.timer import Timer
+#from sdf.eval.utils.timer import Timer
 from sdf.farmbios.helpers import get_farmbios_message
 from sdf.farmbios.proto.compute_pb2 import ComputeRPC
 from sdf.farmbios.proto.farmbios_pb2 import FarmBIOSMessage
@@ -48,30 +49,33 @@ class WineGuardCompute(ComputeModule):
         net_ctrl = self.config.net_ctrl
 
         # A pool of threads to be used for file and message checks.
-        pool = ThreadPoolExecutor(3)
+        self.thread_pool = ThreadPoolExecutor(3)
 
-        # A lit of all threads that will need to register the exit signal
-        exitable_module_threads = []
+        # Add the compute module to the list of threads that will exit
+        # upon receiving an interrupt signal
+        self.exitable_module_threads.append(self)
 
         # Run a thread whose job is to check for new messages.
-        spin_thread_future = pool.submit(net_ctrl.spin_server_forever)
+        spin_thread_future = self.thread_pool.submit(net_ctrl.spin_server_forever)
         spin_thread_future.add_done_callback(net_ctrl.check_on_threads)
         # Note: The WineGuard compute module currently has no
         # threads, so the only exitable thread is the networking thread
-        exitable_module_threads.append(net_ctrl)
+        self.exitable_module_threads.append(net_ctrl)
 
         # Await user exit request.
         #TODO: Refactor this because it appears to be very common in
         #      all of the modules.
-        while True:
-            request = create_request()
-            print("Received a signal to exit, releasing resources\n")
-            for running_module in exitable_module_threads:
-                running_module.exit_signal = True
-            break
+        while self.exit_signal == False:
+            # Sleep to avoid consuming cycles
+            sleep(5)
+            #request = create_request()
+            #print("Received a signal to exit, releasing resources\n")
+            #for running_module in self.exitable_module_threads:
+            #    running_module.exit_signal = True
+            #break
 
         # Wait on all the threads to exit
-        pool.shutdown(wait=True)
+        self.thread_pool.shutdown(wait=True)
 
         # Keeping this for reference until the code is
         # tested and stable.
@@ -104,24 +108,25 @@ class WineGuardCompute(ComputeModule):
            previously uploaded training data.
            :param message: The message from the wire.
         """
-        timer = Timer("Analtics Experiment")
-        timer.start()
+        #timer = Timer("Analtics Experiment")
+        #timer.start()
         args = ExperimentSetup()
         args.ParseFromString(message.compute.proc_args)
         self.log("\nExperiment setup \n %s" % args)
 
-        self.ml_workspace = self.get_workspace(args) 
         self.log("ANALYTICS TYPE %s\n" % args.env.localRun)
         #if args.env != None and args.env.localRun == True:
 
         # To be used for testing
         result = ""
-        if args.env != None and args.env.localRun == True:
+        if args.env != None and args.env.localRun == False:
 
             # Check if the training data file is already local.
             training_file = args.dataset.trainingFile
             training_path = Path(training_file)
             if not(training_path.exists()):
+                self.log("DATASET %s DOES NOT EXIST LOCALLY" % training_file)
+                self.ml_workspace = self.get_workspace(args)
                 # Download the geojson dataset.
                 dataset = Dataset.get_by_name(self.ml_workspace,
                                               name=args.dataset.name)
@@ -145,6 +150,7 @@ class WineGuardCompute(ComputeModule):
                     result_str += str(accuracy)
             result = result_str
         else:
+            self.ml_workspace = self.get_workspace(args)
             experiment_url = get_experiment_url(self.ml_workspace, args)
             result = experiment_url
 
@@ -156,7 +162,7 @@ class WineGuardCompute(ComputeModule):
                                             data=result.SerializeToString(),
                                        callback_id=message.callback.identifier,
                                             is_final_response=True)
-        timer.stop()
+        #timer.stop()
         return [farmbios_msg], None
 
 
