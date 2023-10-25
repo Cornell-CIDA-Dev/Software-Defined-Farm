@@ -22,4 +22,4 @@ WORKDIR /app/SoftwareDefinedFarm/sdf/wineguard
 
 # Run the command to start the compute module when the container is started. 
 #CMD ["python3", "compute_main_wineguard.py", "-c", "wineguard_compute_ks_config.json"]
-CMD ["sleep", "4h"]
+#CMD ["sleep", "4h"]
