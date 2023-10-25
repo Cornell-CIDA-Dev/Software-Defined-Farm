@@ -1,0 +1,38 @@
+{
+    "Comment": "These are the Azure cloud access credentials for the ML workspace.",
+    "access": {
+               "subscriptionID": "",
+               "resourceGroup": "",
+               "workspaceName": ""
+              },
+
+    "Comment": "These are the details for the dataset storage in the ML workspace.",
+    "dataset": {
+                "Comment": "The human readable name form of the dataset that was uploaded from a local PC or through an API call",
+                "name": "",
+                "Comment": "The particular file to use in the dataset, especially when there are multiple",
+                "trainingFile": "",
+                "Comment": "The name that the entry script uses to access the data within the cloud/dataset",
+                "lookupKey": ""
+                },
+    "env": {
+            "Comment": "The name given the environment for future reference in case of reuse",
+            "name": "random-forest-test",
+            "Comment": "The local path where to find the package dependencies for running the entry script",
+            "reqsPath": "" 
+           },
+    "Comment": "The compute cluster to use for experiments, usually created with the workspace",
+    "computeCluster": "",
+    "Comment": "The entry script to use under the src directory (currently - 09/05/22 - under azuremlstuff)",
+    "entryScript": "",
+    "Comment": "The relation that determines whether to run experiments locally or submit them to Azure ML workspace",
+    "location": "remote",
+    "Comment": "The (local) IP for the SDF training script that submits training experiments to the compute module",
+    "trainerHost": "",
+    "Comment": "The (local) port for the SDF training module",
+    "trainerPort": "",
+    "Comment": "The (local) IP for the SDF compute module",
+    "computeHost": "",
+    "Comment": "The (local) port for the SDF compute module",
+    "computePort": ""
+}
