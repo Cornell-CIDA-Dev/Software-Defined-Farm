@@ -1,5 +1,6 @@
 # System packages
 from json import loads
+from signal import signal, SIGINT
 
 
 # Local packages
@@ -58,6 +59,9 @@ if __name__ == "__main__":
 
     # Set the dispacher's network manager.
     dispatcher.set_network_manager(net_ctrl.net_mgr)
+
+    # Set the signal handlers for the "main" compute module.
+    signal(SIGINT, compute_module.signal_handler)
 
     # Run the compute module
     compute_module.run(dispatcher)

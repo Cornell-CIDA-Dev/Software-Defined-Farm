@@ -2,3 +2,6 @@ SDF_DAIRYMGR_DOCKERFILE = dockerfiles/SDF_DairyManager_Upstream_Dockerfile
 SDF_DAIRYMGR_DEV_DOCKERFILE = dockerfiles/SDF_DairyManager_Dev_Dockerfile
 SDF_WINEGUARD_DOCKERFILE = dockerfiles/WineGuard_4BPi_Test_Dockerfile 
 SDF_WINEGUARD_DEV_DOCKERFILE = dockerfiles/SDF_Wineguard_Dev_Dockerfile 
+SDF_TWO_DEV_DOCKERFILE = dockerfiles/SDF_Two_Dev_Dockerfile
+SDF_WINEGUARD_COMPUTEDEV_DOCKERFILE = dockerfiles/SDF_Wineguard_Compute_Dockerfile
+SDF_WINEGUARD_TRAINERDEV_DOCKERFILE = dockerfiles/SDF_Wineguard_Trainer_Dockerfile

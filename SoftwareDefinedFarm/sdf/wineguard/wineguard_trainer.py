@@ -7,18 +7,18 @@ from typing import Any, Dict
 
 # Local packages
 from sdf.compute.base_compute import ComputeModule
-from sdf.eval.utils.timer import Timer
+#from sdf.eval.utils.timer import Timer
 from sdf.farmbios.base_handler import BaseRPCHandler 
 from sdf.farmbios.proto.compute_pb2 import ComputeRPC
 from sdf.farmbios.proto.farmbios_pb2 import FarmBIOSMessage
 from sdf.farmbios.proto.shared_pb2 import CallType
 from sdf.helper_typedefs import Modules as mod
 from sdf.network.network_controller import NetworkController 
-from sdf.utils.user_input import create_request
 from sdf.wineguard.callback_enum_defs import WineGuardComputeCallBacks \
                                              as wing_co_cb 
 from sdf.wineguard.proto.wineguard_pb2 import ExperimentResult
 from sdf.wineguard.wineguard_config import WineGuardComputeConfig 
+
 
 # Third party packages
 from azureml.core import Dataset, Workspace
@@ -93,17 +93,18 @@ class WineGuardTrainer(ComputeModule):
         net_ctrl = self.config.net_ctrl
 
         # A pool of threads to be used for file and message checks. 
-        pool = ThreadPoolExecutor(1)
+        self.thread_pool = ThreadPoolExecutor(1)
 
-        # A lit of all threads that will need to register the exit signal
-        exitable_module_threads = []
+        # Add the trainer module to the list of threads that will exit =
+        # upon receving an interrupt signal
+        self.exitable_module_threads.append(self)
 
         # Run a thread whose job is to check for new messages.
-        spin_thread_future = pool.submit(net_ctrl.spin_server_forever)
+        spin_thread_future = self.thread_pool.submit(net_ctrl.spin_server_forever)
         spin_thread_future.add_done_callback(net_ctrl.check_on_threads)
         # Note: The WineGuard trainer module currently has no
         # threads, so the only exitable thread is the networking thread
-        exitable_module_threads.append(net_ctrl)
+        self.exitable_module_threads.append(net_ctrl)
 
         # Sleep a bit before starting analytics
         sleep(TEN_SECONDS)
@@ -116,16 +117,13 @@ class WineGuardTrainer(ComputeModule):
         # Run experiment
         self.submit_experiments(1)
 
-        # Await user exit request.
-        while True:
-            request = create_request()
-            print("Received a signal to exit, releasing resources\n")
-            for running_module in exitable_module_threads:
-                running_module.exit_signal = True
-            break
+        # Await interrupt signal.
+        while self.exit_signal == False:
+            # Sleep to avoid consuming cycles
+            sleep(5)
 
         # Wait on all the threads to exit
-        pool.shutdown(wait=True)
+        self.thread_pool.shutdown(wait=True)
 
 
     def submit_experiments(self, num: int):
@@ -136,11 +134,11 @@ class WineGuardTrainer(ComputeModule):
         for index in range(num):
             experiment_number = index + 1
             experiment_name = "Edge Wineguard Experiment: " + str(experiment_number)
-            timer = Timer("Timer for " + experiment_name)
+            #timer = Timer("Timer for " + experiment_name)
             print(experiment_name)
-            timer.start()
+            #timer.start()
             self.analytics()
-            timer.stop()
+            #timer.stop()
             print("Sleeping for %d seconds\n" % TEN_SECONDS)
             sleep(TEN_SECONDS)
 

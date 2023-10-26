@@ -1,5 +1,7 @@
 # System imports
 from logging import WARNING
+from typing import Any
+from signal import Signals
 
 
 # Local packages
@@ -18,6 +20,26 @@ class ThreadedUniversalBase(UniversalBase):
 
     def __init__(self):
         super().__init__()
+        self.exitable_module_threads = []
+        self.thread_pool = None
+
+
+    def signal_handler(self, signum, frame):
+        """
+           A handler to watch for exit signs such as SIGINT and SIGKILL.
+           :param signum: The signal number sent.
+           :param frame: The stack frame of where the main thread's execution
+                         was interrupted.
+        """
+        signame = Signals(signum).name
+        self.log("%s module signal handler called with %s (%s)" %
+                      (self.__class__.__name__, signame, signum))
+
+        if self.thread_pool != None:
+            # Notify all other threads, if any, to exit
+            for running_module in self.exitable_module_threads:
+                self.log("Notifying %s module to exit" % running_module.__class__.__name__)
+                running_module.exit_signal = True
 
 
     def check_on_threads(self, future):

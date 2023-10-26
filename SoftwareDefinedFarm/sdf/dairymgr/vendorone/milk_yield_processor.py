@@ -590,7 +590,7 @@ class MilkYieldReader(UniversalBase):
         # Checking for TYPE_NULL is hard because it's the same as
         # the character for numeric types in openpyxl ('n')
         # Therefore we just check what null values may look like.
-        null_vals = ["--", "", None]
+        null_vals = ["--", "", None, "N/A"]
 
         if cell.value in null_vals:
             if exp_type == Casts.INT or exp_type == Casts.SINT:
