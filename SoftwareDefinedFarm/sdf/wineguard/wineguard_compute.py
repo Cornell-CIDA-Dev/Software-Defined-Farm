@@ -17,7 +17,6 @@ from sdf.wineguard.azuremlstuff.control import get_experiment_url
 from sdf.wineguard.wineguard_config import WineGuardComputeConfig 
 from sdf.wineguard.azuremlstuff.src.rf_vines import rf_vines_experiment
 from sdf.wineguard.proto.wineguard_pb2 import ExperimentSetup, ExperimentResult
-from sdf.utils.user_input import create_request
 
 
 # Third party packages
@@ -68,11 +67,6 @@ class WineGuardCompute(ComputeModule):
         while self.exit_signal == False:
             # Sleep to avoid consuming cycles
             sleep(5)
-            #request = create_request()
-            #print("Received a signal to exit, releasing resources\n")
-            #for running_module in self.exitable_module_threads:
-            #    running_module.exit_signal = True
-            #break
 
         # Wait on all the threads to exit
         self.thread_pool.shutdown(wait=True)

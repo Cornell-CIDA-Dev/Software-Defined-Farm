@@ -14,7 +14,6 @@ from sdf.farmbios.proto.farmbios_pb2 import FarmBIOSMessage
 from sdf.farmbios.proto.shared_pb2 import CallType
 from sdf.helper_typedefs import Modules as mod
 from sdf.network.network_controller import NetworkController 
-from sdf.utils.user_input import create_request
 from sdf.wineguard.callback_enum_defs import WineGuardComputeCallBacks \
                                              as wing_co_cb 
 from sdf.wineguard.proto.wineguard_pb2 import ExperimentResult
