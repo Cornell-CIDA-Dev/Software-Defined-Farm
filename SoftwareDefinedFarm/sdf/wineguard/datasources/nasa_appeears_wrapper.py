@@ -2,6 +2,7 @@
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from json import loads
+from pathlib import Path
 from time import time, sleep
 from typing import Any, Dict, List
 
@@ -211,20 +212,104 @@ class AppeearsWrapper(UniversalBase):
            List all requests associated with a user account.
            This call requires authentication with EarthCloud.
         """
+        # Check if there is an active token
+        if self.active_token == None:
+            self.active_token = self.get_new_token()
+
+        # Get the layers related to the product
+        token = self.active_token['token']
+
+        response = get(self.general_api + 'task',
+                       headers={'Authorization': 'Bearer ' + token})
+
+        return response.json()
 
 
-    def retrieve_task(self, task_id):
+    def retrieve_task(self, task_id: str):
         """
            Retrieve a particular task given an existing ID.
+           :param task_id: The unique task identifier.
            This call requires authentication with EarthCloud.
         """
+        # Check if there is an active token
+        if self.active_token == None:
+            self.active_token = self.get_new_token()
+
+        # Get the layers related to the product
+        token = self.active_token['token']
+
+        response = get(self.general_api + 'task/' + task_id,
+                       headers={'Authorization': 'Bearer ' + token})
+
+        return response.json()
 
 
-    def delete_task(self, task_id):
+    def delete_task(self, task_id: str):
         """
            Delete a particular task given an existing ID.
+           :param task_id: The unique task identifier.
            This call requires authentication with EarthCloud.
         """
+        # Check if there is an active token
+        if self.active_token == None:
+            self.active_token = self.get_new_token()
+
+        token = self.active_token['token']
+
+        response = delete(self.general_api + 'task/' + task_id,
+                          headers={'Authorization': 'Bearer ' + token})
+
+        # 204 is considered to have been successful.
+        return response.status_code
+
+
+    def get_task_bundle(self, task_id: str):
+        """
+           List all files available for download in a task bundle.
+           :param task_id: The unique task identifier.
+           This call requires authentication with EarthCloud.
+        """
+        # Check if there is an active token
+        if self.active_token == None:
+            self.active_token = self.get_new_token()
+
+        # Get the files associated with the bundle. 
+        token = self.active_token['token']
+
+        response = get(self.general_api + 'bundle/' + task_id,
+                       headers={'Authorization': 'Bearer ' + token})
+
+        return response.json()
+
+
+    def download_bundle_file(self,
+                             task_id: str,
+                             file_id: str):
+        """
+           Download a file from a completed task bundle.
+           :param task_id: The unique task identifier.
+           :param file_id: The unique identifier for the file.
+        """
+        # Check if there is an active token
+        if self.active_token == None:
+            self.active_token = self.get_new_token()
+
+        token = self.active_token['token']
+        target_url = self.general_api + 'bundle/' + task_id
+        target_url += '/' + file_id
+        response = get(target_url,
+                       headers={'Authorization': 'Bearer ' + token},
+                       allow_redirects=True,
+                       stream=True)
+
+        # Create a directory where to store the file, only if one
+        # does not already exist for the given task ID
+        dir_path = Path(task_id).mkdir(exist_ok=True)
+        file_path = Path(task_id).joinpath(file_id)
+
+        with open(file_path, 'wb') as fd:
+            for data in response.iter_content(chunk_size=8192):
+                fd.write(data)
 
 
 # Main method
@@ -243,6 +328,8 @@ if __name__ == "__main__":
         exit(1)
 
     wrapper = AppeearsWrapper(config)
+
+    # Get the list of available products
     #products = wrapper.get_product_list()
     #for product_id, info in products.items():
     #    print("Product ID: %s, Platform: %s, Description: %s\n\n" % \
@@ -257,30 +344,38 @@ if __name__ == "__main__":
     #       print("Layer %s: \n Details: %s\n\n" % (layer, details))
 
     # Load stub point request
-    stub_point_json_path = config['stubPointRequestFile']
-    try:
-        with open(stub_point_json_path, 'r') as fd:
-            pt_request_json = loads(fd.read())
-    except FileNotFoundError as fnf:
-        print("Stub point request file %s not found... exiting" % pt_request_json)
-        exit(1)
+    #stub_point_json_path = config['stubPointRequestFile']
+    #try:
+    #    with open(stub_point_json_path, 'r') as fd:
+    #        pt_request_json = loads(fd.read())
+    #except FileNotFoundError as fnf:
+    #    print("Stub point request file %s not found... exiting" % pt_request_json)
+    #    exit(1)
 
     # Init parameters for the task object from the loaded JSON
-    task_type = TaskTypes.POINT
-    task_name = pt_request_json['taskName']
-    dates = pt_request_json['dates']
-    layers = pt_request_json['layers']
-    coordinates = pt_request_json['coordinates']
-    output_format = OutputTypes.GEOTIFF
+    #task_type = TaskTypes.POINT
+    #task_name = pt_request_json['taskName']
+    #dates = pt_request_json['dates']
+    #layers = pt_request_json['layers']
+    #coordinates = pt_request_json['coordinates']
+    #output_format = OutputTypes.GEOTIFF
 
-    task_obj = wrapper.create_task(task_type, dates, layers,
-                                   task_name=task_name,
-                                   coordinates=coordinates,
-                                   output_type=output_format)
+    #task_obj = wrapper.create_task(task_type, dates, layers,
+    #                               task_name=task_name,
+    #                               coordinates=coordinates,
+    #                               output_type=output_format)
 
-    for key, value in task_obj.items():
-        print("%s: %s\n" % (key, value))
+    #for key, value in task_obj.items():
+    #    print("%s: %s\n" % (key, value))
 
     # Submit task for testing
     #response_code, task_response = wrapper.submit_task(task_obj)
     #print("Response code %s\n Response: %s\n" % (response_code, task_response))
+
+    # Test checking and downloading bundles for an existing task
+    #task_id = pt_request_json['nov3TaskId'] 
+    #task_bundles = wrapper.get_task_bundle(task_id)
+    #for file_dets in task_bundles['files']:
+    #    print("%s:\n" % file_dets)
+    #    # Download the file
+    #    wrapper.download_bundle_file(task_id, file_dets['file_id'])

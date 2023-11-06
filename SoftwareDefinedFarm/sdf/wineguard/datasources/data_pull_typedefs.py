@@ -24,13 +24,3 @@ class SpatialProjections(Enum):
 class OutputTypes(Enum):
     GEOTIFF = "geotiff"
     NETCDF4 = "netcdf4"
-
-
-# Definitions for module raw strings
-# This allows for cleaner development by using enums
-#class Modules(Enum):
-#    SENSOR = "sensor"
-#    STORAGE = "storage"
-#    COMPUTE = "compute"
-#    ACTUATION = "actuation"
-#    CONFIG = "config"
