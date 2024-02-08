@@ -1,0 +1,24 @@
+{
+ "username": "Insert EarthCloud username",
+ "password": "Insert EarthCloud password",
+ "products": [ {
+                "FullVersion": "ECO2LSTE.001",
+                "Description": "Land Surface Temp and Emissivity",
+                "Layers": ["SDS_LST", "SDS_Emis1"],
+                "Projection": "geographic"
+               },
+               {
+                "FullVersion": "ECO2CLD.001",
+                "Description": "Cloud Mask",
+                "Layers": ["SDS_CloudMask"],
+                "Projection": "geographic"
+               },
+               {
+               "FullVersion": "ECO3ETPTJPL.001",
+               "Description": "Evapotranspiration PT-JPL Model",
+               "Layers": ["EVAPOTRANSPIRATION_PT_JPL_ETdaily"],
+                "Projection": "geographic"
+               }
+             ],
+  "stubPointRequestFile": "stub_point_request.json"
+}
