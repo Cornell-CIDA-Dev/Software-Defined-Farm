@@ -40,10 +40,18 @@ This project has benefited from funding from the National Science Foundation
 [1955125](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1955125&HistoricalAwards=false)
 [1922551](https://www.nsf.gov/awardsearch/showAward?AWD\_ID=1922551&HistoricalAwards=false]),
 and [2019674](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2019674&HistoricalAwards=false),
-a [Microsoft Investigator Fellowship](https://www.microsoft.com/en-us/research/academic-program/microsoft-investigator-fellowship/fellowship-recipients/), USDA AFRI-NIFA under project #2017-67015-26772,
-and New York Farm Viability Institute under project #017-014.
-Further, the project has benefited from technical guidance and cloud computing
-resources from Microsoft.
+a [Microsoft Investigator Fellowship](https://www.microsoft.com/en-us/research/academic-program/microsoft-investigator-fellowship/fellowship-recipients/),
+the United States Department of Agriculture (USDA)'s National Institute for
+Food and Agriculture (NIFA) under project #2017-67015-26772 and #2023-77038-38865,
+and the New York Farm Viability Institute under project #017-014.
+The project has also benefited from technical guidance and cloud computing resources
+from Microsoft and IBM Research.
+
+The SDF project also benefits from research, expertise, and infrastructure from the
+[Kubestellar project](https://docs.kubestellar.io/release-0.14/).
+Kubestellar is a Cloud Native Computing Foundation sandbox project.
+
+
 
 ### Contributions
 To contribute, please do the usual `git clone
