@@ -23,3 +23,6 @@ SoftwareDefinedFarm/sdf/thefarms/
 # whether it belongs with the open-source version, especially since it
 # involves the Azure cloud credentials
 *waterstress/
+
+# Ignore geojson files that may be stored to or downloaded from clouds
+*.geojson

@@ -5,7 +5,7 @@ from signal import signal, SIGINT
 
 
 # Local packages
-from sdf.utils.user_input import parse_main_args, create_request
+from sdf.utils.user_input import parse_main_args
 #from sdf.eval.utils.timer import Timer
 from sdf.farmbios.dispatcher import Dispatcher
 from sdf.farmbios.compute_handler import ComputeRPCHandler

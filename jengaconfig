@@ -5,3 +5,4 @@ SDF_WINEGUARD_DEV_DOCKERFILE = dockerfiles/SDF_Wineguard_Dev_Dockerfile
 SDF_TWO_DEV_DOCKERFILE = dockerfiles/SDF_Two_Dev_Dockerfile
 SDF_WINEGUARD_COMPUTEDEV_DOCKERFILE = dockerfiles/SDF_Wineguard_Compute_Dockerfile
 SDF_WINEGUARD_TRAINERDEV_DOCKERFILE = dockerfiles/SDF_Wineguard_Trainer_Dockerfile
+SDF_WINEGUARD_TRAINER_KS_DOCKERFILE = dockerfiles/SDF_Wineguard_Trainer_KS_Dockerfile
