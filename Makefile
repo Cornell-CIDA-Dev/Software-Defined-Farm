@@ -15,6 +15,11 @@ sdf-wineguard-compute-dev-image:
 sdf-wineguard-trainer-dev-image:
 	docker build -t $(OPEN_WINEGUARD_TRAINER_DEV_IMG) -f $(SDF_WINEGUARD_TRAINERDEV_DOCKERFILE) ./SoftwareDefinedFarm
 
+# Build a trainer to be run inside a kubestellar cluster
+sdf-wineguard-trainer-ks-image:
+	docker build -t $(OPEN_WINEGUARD_TRAINER_KS_IMG) -f $(SDF_WINEGUARD_TRAINER_KS_DOCKERFILE) ./SoftwareDefinedFarm
+
+
 sdf-dairymanager-dev-image:
 	docker build -t $(OPEN_DAIRYMGR_DEV_IMAGE) -f $(SDF_DAIRYMGR_DEV_DOCKERFILE) ./SoftwareDefinedFarm
 
