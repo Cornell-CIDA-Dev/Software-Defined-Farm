@@ -148,7 +148,6 @@ class WineGuardTrainer(ComputeModule):
         """
         compute_msg = ComputeRPC()
         compute_msg.procedure.call = CallType.ANALYTICS
-        exp_name = self.config.exp_setup.experimentName
         exp_name = 'farmbioswineguard-' + str(date.today()) 
         exp_name += '-' + str(int(time()))
         self.config.exp_setup.experimentName = exp_name
