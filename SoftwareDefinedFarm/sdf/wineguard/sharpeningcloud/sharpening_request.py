@@ -8,20 +8,17 @@ from typing import Any, Dict
 # Local packages
 from sdf.compute.base_compute import ComputeModule
 #from sdf.eval.utils.timer import Timer
-from sdf.farmbios.base_handler import BaseRPCHandler 
 from sdf.farmbios.proto.compute_pb2 import ComputeRPC
 from sdf.farmbios.proto.farmbios_pb2 import FarmBIOSMessage
 from sdf.farmbios.proto.shared_pb2 import CallType
 from sdf.helper_typedefs import Modules as mod
-from sdf.network.network_controller import NetworkController 
 from sdf.wineguard.callback_enum_defs import WineGuardComputeCallBacks \
                                              as wing_co_cb 
-from sdf.wineguard.proto.wineguard_pb2 import ExperimentResult
-from sdf.wineguard.wineguard_config import WineGuardComputeConfig 
+from sdf.wineguard.proto.wineguard_pb2 import EarthClouResult 
+from sdf.wineguard.sharpeningcloud.sharpening_cloud_config import SharpeningRequestConfig 
 
 
 # Third party packages
-from azureml.core import Dataset, Workspace
 
 
 __author__ = "Gloire Rubambiza"
@@ -30,11 +27,11 @@ __credits__ = ["Gloire Rubambiza"]
 
 TEN_SECONDS = 10
 
-# @brief: The trainer module for the WineGuard application.
-class WineGuardTrainer(ComputeModule):
+# @brief: The request module for WineGuard 2.0 app
+class SharpeningRequest(ComputeModule):
 
     def __init__(self,
-                 config: WineGuardComputeConfig,
+                 config: SharpeningRequestConfig,
                  *args: Any,
                  **kwargs: Any):
         super().__init__()
@@ -71,13 +68,11 @@ class WineGuardTrainer(ComputeModule):
            Process the results from the training/prediction run.
            :param message: The message from the wire.
         """
-        result_msg = ExperimentResult()
+        # TODO: Here the results will be either a link to the EarthCloud portal or a link to S3 in case of Dynamo DB.
+        result_msg = EarthClouResult()
         result_msg.ParseFromString(message.data)
-        summary = result_msg.resultSummary
-        if (type(summary) == str) and ("portal" in summary):
-            self.log("\nResult can be seen at %s\n" % summary)
-        else:
-            self.log("\nResult: %s\n" % summary)
+        summary = result_msg.result
+        self.log("\nResult: %s\n" % summary)
 
         return None, None
 
@@ -85,7 +80,7 @@ class WineGuardTrainer(ComputeModule):
     def run(self,
             dispatcher: Any):
         """
-           Run the thread for listening to user requests
+           Run the thread for listening to incoming requests
            :param dispatcher: The dispatcher for incoming/outgoing messages.
         """
 
@@ -133,14 +128,15 @@ class WineGuardTrainer(ComputeModule):
         """
         for index in range(num):
             experiment_number = index + 1
-            experiment_name = "Edge Wineguard Experiment: " + str(experiment_number)
+            experiment_name = "Sharpening Request: " + str(experiment_number)
             #timer = Timer("Timer for " + experiment_name)
-            print(experiment_name)
+            self.log(experiment_name)
             #timer.start()
             self.analytics()
             #timer.stop()
-            print("Sleeping for %d seconds\n" % TEN_SECONDS)
+            self.log("Sleeping for %d seconds\n" % TEN_SECONDS)
             sleep(TEN_SECONDS)
+
 
     def analytics(self):
         """
@@ -148,10 +144,11 @@ class WineGuardTrainer(ComputeModule):
         """
         compute_msg = ComputeRPC()
         compute_msg.procedure.call = CallType.ANALYTICS
-        exp_name = 'farmbioswineguard-' + str(date.today()) 
+        # TODO: Change the definitions of configs to go with requests
+        exp_name = 'sharpening-request-' + str(date.today())
         exp_name += '-' + str(int(time()))
-        self.config.exp_setup.experimentName = exp_name
-        compute_msg.proc_args = self.config.exp_setup.SerializeToString()
+        self.config.earth_cloud.request.name = exp_name
+        compute_msg.proc_args = self.config.earth_cloud.request.SerializeToString()
 
         # Register a call back to process the results
         outgoing_msg = self.dispatcher.compose_outbound(compute_msg,
@@ -162,10 +159,3 @@ class WineGuardTrainer(ComputeModule):
         self.dispatcher.dispatch_message(outgoing_msg)
 
         # Insert model training/registration stuff somewhere here.
-
-
-    def get_workspace(self, args):
-        """ 
-            Set up the workspace configuration.
-        """
-        pass

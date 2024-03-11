@@ -1,16 +1,10 @@
 # System imports
-from concurrent.futures import ThreadPoolExecutor
-from datetime import date
-from json import loads
 from pathlib import Path
-from time import time, sleep
 from typing import Any, Dict, List
 
 
 # Local packages
-from sdf.utils.user_input import parse_main_args
-#from sdf.utils.universal_base_class import UniversalBase
-from sdf.wineguard.datasources.data_pull_typedefs import (TaskTypes, OutputTypes,
+from sdf.storage.nasacloudwrappers.data_pull_typedefs import (TaskTypes, OutputTypes,
                                               SpatialProjections as Projections)
 from sdf.storage.base_storage import StorageModule 
                                                          
@@ -60,7 +54,7 @@ class NASAppeearsService(StorageModule):
         """
 
         # Wait on JSONifying until the response is guaranteed to not error.
-        product_endpt = general_api + 'product'
+        product_endpt = self.general_api + 'product'
         response = get(product_endpt)
         product_response = response.json()
         all_products = { p['ProductAndVersion']: p for p in product_response }
