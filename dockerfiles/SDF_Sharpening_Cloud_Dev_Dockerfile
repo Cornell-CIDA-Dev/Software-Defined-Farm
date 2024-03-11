@@ -12,6 +12,11 @@ RUN pip install -r ../tmp/sharpening_cloud_requirements.txt
 # Remove the temp directory
 RUN rm -r ../tmp/
 
+# Copy the AWS credentials and config for local testing
+COPY credentials /root/.aws/credentials
+COPY aws_config /root/.aws/config
+
+
 # NOTE: The dev image does not copy the code
 # This enables making changes while testing in the same container
 # The only two inconveniences are:

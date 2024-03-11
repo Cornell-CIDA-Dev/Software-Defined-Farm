@@ -12,6 +12,10 @@ RUN pip install -r ../tmp/sharpening_cloud_requirements.txt
 # Remove the temp directory
 RUN rm -r ../tmp/
 
+# Copy the AWS credentials and config for local testing
+COPY credentials /root/.aws/credentials
+COPY aws_config /root/.aws/config
+
 # Copy and install the sdf package
 COPY . /app/SoftwareDefinedFarm
 WORKDIR /app/SoftwareDefinedFarm

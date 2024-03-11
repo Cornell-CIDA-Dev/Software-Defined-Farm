@@ -12,7 +12,6 @@ from sdf.farmbios.compute_handler import ComputeRPCHandler
 from sdf.helper_typedefs import Modules as mod
 from sdf.network.status import CommunicationStatus as comstatus
 from sdf.network.network_controller import NetworkController 
-#from sdf.wineguard.wineguard_trainer import WineGuardTrainer 
 from sdf.wineguard.sharpeningcloud.sharpening_request import SharpeningRequest
 from sdf.wineguard.sharpeningcloud.sharpening_cloud_config import SharpeningRequestConfig
 

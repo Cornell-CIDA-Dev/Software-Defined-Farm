@@ -13,13 +13,10 @@ from sdf.farmbios.proto.compute_pb2 import ComputeRPC
 from sdf.farmbios.proto.farmbios_pb2 import FarmBIOSMessage
 from sdf.farmbios.proto.shared_pb2 import ResponseType
 from sdf.helper_typedefs import Modules as mod
-#from sdf.wineguard.azuremlstuff.control import get_experiment_url 
+from sdf.storage.nasacloudwrappers.nasa_appeears_wrapper import NASAppeearsService 
+from sdf.storage.awswrappers.aws_dynamodb_wrapper import DynamoDBService 
 from sdf.wineguard.sharpeningcloud.sharpening_cloud_config import SharpeningRequestConfig 
 from sdf.wineguard.proto.wineguard_pb2 import Request, EarthClouResult
-#from sdf.wineguard.azuremlstuff.src.rf_vines import rf_vines_experiment
-# TODO: Define a new proto for ExperimentSetup and Experiment Result
-# TODO: Perhaps subclass the Setup and Result into WineGuard 1.0 and 2.0
-#from sdf.wineguard.proto.wineguard_pb2 import ExperimentSetup, ExperimentResult
 
 
 # Third party packages
@@ -59,7 +56,7 @@ class SharpeningCompute(ComputeModule):
         # Run a thread whose job is to check for new messages.
         spin_thread_future = self.thread_pool.submit(net_ctrl.spin_server_forever)
         spin_thread_future.add_done_callback(net_ctrl.check_on_threads)
-        # Note: The WineGuard compute module currently has no
+        # Note: The sharpening compute module currently has no
         # threads, so the only exitable thread is the networking thread
         self.exitable_module_threads.append(net_ctrl)
 
@@ -72,26 +69,6 @@ class SharpeningCompute(ComputeModule):
 
         # Wait on all the threads to exit
         self.thread_pool.shutdown(wait=True)
-
-        # Keeping this for reference until the code is
-        # tested and stable.
-        #args = ExperimentSetup()
-        #args.ParseFromString(message.compute.proc_args)
-        #self.log("\nExperiment setup \n %s" % args)
-        #timer = Timer("Analtics Experiment")
-        #timer.start()
-        #result = self.analytics(args)
-
-        #result = ExperimentResult(resultSummary=result)
-        #compute_msg = ComputeRPC()
-        #compute_msg.procedure.response = ResponseType.SUCCESS
-        #farmbios_msg = get_farmbios_message(msg_type=mod.COMPUTE,
-        #                                    metadata=compute_msg,
-        #                                    data=result.SerializeToString(),
-        #                               callback_id=message.callback.identifier,
-        #                                    is_final_response=True)
-        #timer.stop()
-        #return [farmbios_msg], None
 
 
     def analytics(self, message: FarmBIOSMessage):
@@ -111,6 +88,26 @@ class SharpeningCompute(ComputeModule):
         self.log("\nRequest setup \n %s" % args)
 
         # Insert logic for issuing requests either to NASA or DynamoDB here
+        # POC to pull list of products from EarthCloud
+        credentials = {'username': self.config.earth_cloud.access.username,
+                       'password': self.config.earth_cloud.access.password
+                      }
+
+        nasa_resource = NASAppeearsService(credentials)
+        product_list = nasa_resource.get_product_list()
+        self.log("All EarthCloud products %s\n" % product_list)
+
+        
+        dynamodb = DynamoDBService(self.config)
+        table = dynamodb.get_table('VineyardsRasterMetrics')
+        self.log("Table Name %s\n" % table.table_name)
+        self.log("Table Creation Time: %s" % table.creation_date_time)
+        self.log("Table Item Count %s\n" % table.item_count)
+        self.log("Table Sample Calls:\n")
+        for attribute in dir(table):
+            if 'table' in attribute or 'item' in attribute:
+                self.log(attribute + '\n')
+
 
         # Encapsulate results and send them back to the requester
         result = EarthClouResult(result="allgood")

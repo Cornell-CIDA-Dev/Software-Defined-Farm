@@ -87,6 +87,9 @@ class SharpeningCloudConfig(BaseConfig):
 
         self.earth_cloud = EarthCloudConfig()
         self.earth_cloud.products.extend(products)
+        self.earth_cloud.access.username = config['username']
+        self.earth_cloud.access.password = config['password']
+        self.log("EarthCloud config given %s\n" % self.earth_cloud)
 
         # Configure the address tuple to be used by the request module
         self.requester_address = tuple([config['computeHost'],

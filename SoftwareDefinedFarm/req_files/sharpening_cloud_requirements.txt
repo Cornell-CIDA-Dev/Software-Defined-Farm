@@ -1,1 +1,3 @@
 protobuf==3.11.3
+requests
+boto3

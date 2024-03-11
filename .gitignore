@@ -26,3 +26,7 @@ SoftwareDefinedFarm/sdf/thefarms/
 
 # Ignore geojson files that may be stored to or downloaded from clouds
 *.geojson
+
+# Ignore AWS credential files for local testing
+credentials
+aws_config
