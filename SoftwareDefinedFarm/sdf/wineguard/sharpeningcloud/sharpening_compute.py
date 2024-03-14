@@ -15,6 +15,7 @@ from sdf.farmbios.proto.shared_pb2 import ResponseType
 from sdf.helper_typedefs import Modules as mod
 from sdf.storage.nasacloudwrappers.nasa_appeears_wrapper import NASAppeearsService 
 from sdf.storage.awswrappers.aws_dynamodb_wrapper import DynamoDBService 
+from sdf.storage.awswrappers.aws_s3_wrapper import S3Service 
 from sdf.wineguard.sharpeningcloud.sharpening_cloud_config import SharpeningRequestConfig 
 from sdf.wineguard.proto.wineguard_pb2 import Request, EarthClouResult
 
@@ -95,18 +96,28 @@ class SharpeningCompute(ComputeModule):
 
         nasa_resource = NASAppeearsService(credentials)
         product_list = nasa_resource.get_product_list()
-        self.log("All EarthCloud products %s\n" % product_list)
+        #self.log("All EarthCloud products %s\n" % product_list)
 
         
-        dynamodb = DynamoDBService(self.config)
-        table = dynamodb.get_table('VineyardsRasterMetrics')
+        dynamodb_service = DynamoDBService(self.config)
+        table_name = "Images_TestTable"
+        table = dynamodb_service.get_table(table_name)
         self.log("Table Name %s\n" % table.table_name)
         self.log("Table Creation Time: %s" % table.creation_date_time)
         self.log("Table Item Count %s\n" % table.item_count)
-        self.log("Table Sample Calls:\n")
-        for attribute in dir(table):
-            if 'table' in attribute or 'item' in attribute:
-                self.log(attribute + '\n')
+
+        # Test getting an existing time in the table
+        #item = {'timestamp': 1595142000,
+        #        'image_id': 'lodi_1'}
+        #self.log("Testing get item for %s\n" % item)
+        #item = dynamodb_service.read(table_name, item)['Item']
+
+        # Test downloading an image from S3
+        bucket_name = "sharpenedhlsimagery"
+        object_name = ""
+        local_dest = "local_copy.tif"
+        s3_service = S3Service(self.config)
+        s3_service.read(bucket_name, object_name, local_dest)
 
 
         # Encapsulate results and send them back to the requester
