@@ -107,14 +107,15 @@ class SharpeningCompute(ComputeModule):
         self.log("Table Item Count %s\n" % table.item_count)
 
         # Test getting an existing time in the table
-        #item = {'timestamp': 1595142000,
-        #        'image_id': 'lodi_1'}
-        #self.log("Testing get item for %s\n" % item)
-        #item = dynamodb_service.read(table_name, item)['Item']
+        item = {'timestamp': 1595142000,
+                'image_id': 'lodi_1'}
+        self.log("Testing get item for %s\n" % item)
+        item = dynamodb_service.read(table_name, item)['Item']
+        self.log("Item retrieved %s\n" % item)
 
         # Test downloading an image from S3
         bucket_name = "sharpenedhlsimagery"
-        object_name = ""
+        object_name = "data/E_20200719.tif"
         local_dest = "local_copy.tif"
         s3_service = S3Service(self.config)
         s3_service.read(bucket_name, object_name, local_dest)
