@@ -7,7 +7,7 @@ from typing import Any, Dict
 
 # Local packages
 from sdf.compute.base_compute import ComputeModule
-#from sdf.eval.utils.timer import Timer
+from sdf.utils.timer import Timer
 from sdf.farmbios.proto.compute_pb2 import ComputeRPC
 from sdf.farmbios.proto.farmbios_pb2 import FarmBIOSMessage
 from sdf.farmbios.proto.shared_pb2 import CallType
@@ -36,6 +36,7 @@ class SharpeningRequest(ComputeModule):
                  **kwargs: Any):
         super().__init__()
         self.config = config
+        self.timer = None
 
 
     def set_dispatcher(self, dispatcher: Any):
@@ -73,6 +74,9 @@ class SharpeningRequest(ComputeModule):
         result_msg.ParseFromString(message.data)
         summary = result_msg.result
         self.log("\nResult: %s\n" % summary)
+
+        # Clock the end of an experiment
+        self.timer.stop()
 
         return None, None
 
@@ -129,9 +133,10 @@ class SharpeningRequest(ComputeModule):
         for index in range(num):
             experiment_number = index + 1
             experiment_name = "Sharpening Request: " + str(experiment_number)
-            #timer = Timer("Timer for " + experiment_name)
+            # Clock the start of an experiment
+            self.timer = Timer("Timer for " + experiment_name)
             self.log(experiment_name)
-            #timer.start()
+            self.timer.start()
             self.analytics()
             #timer.stop()
             self.log("Sleeping for %d seconds\n" % TEN_SECONDS)
