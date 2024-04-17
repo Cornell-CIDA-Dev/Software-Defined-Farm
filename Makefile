@@ -25,7 +25,7 @@ sdf-sharpening-cloud-dev-image:
 
 # Build the sharpening cloud modules to be tested in a kubestellar container
 sdf-sharpening-cloud-ks-image:
-	docker build -t $(OPEN_SHARPENING_CLOUD_UPSTREAM_IMG) -f $(SDF_SHARPENING_CLOUD_UPSTREAM_DOCKERFILE) ./SoftwareDefinedFarm
+	docker buildx build  --platform linux/amd64,linux/arm64,linux/arm/v7 -t $(OPEN_SHARPENING_CLOUD_UPSTREAM_IMG) --push -f $(SDF_SHARPENING_CLOUD_UPSTREAM_DOCKERFILE) ./SoftwareDefinedFarm
 
 sdf-dairymanager-dev-image:
 	docker build -t $(OPEN_DAIRYMGR_DEV_IMAGE) -f $(SDF_DAIRYMGR_DEV_DOCKERFILE) ./SoftwareDefinedFarm
