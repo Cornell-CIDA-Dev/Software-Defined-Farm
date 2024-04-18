@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='wineguard.proto',
   package='sdf',
   syntax='proto3',
-  serialized_pb=_b('\n\x0fwineguard.proto\x12\x03sdf\"S\n\x0b\x43redentials\x12\x16\n\x0esubscriptionId\x18\x01 \x01(\t\x12\x15\n\rresourceGroup\x18\x02 \x01(\t\x12\x15\n\rworkspaceName\x18\x03 \x01(\t\"@\n\x07\x44\x61taset\x12\x14\n\x0ctrainingFile\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x11\n\tlookupKey\x18\x03 \x01(\t\"?\n\x0b\x45nvironment\x12\x10\n\x08localRun\x18\x01 \x01(\x08\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08reqsPath\x18\x03 \x01(\t\"\xb6\x01\n\x0f\x45xperimentSetup\x12\x1d\n\x03\x65nv\x18\x01 \x01(\x0b\x32\x10.sdf.Environment\x12\x16\n\x0e\x65xperimentName\x18\x02 \x01(\t\x12 \n\x06\x61\x63\x63\x65ss\x18\x03 \x01(\x0b\x32\x10.sdf.Credentials\x12\x1d\n\x07\x64\x61taset\x18\x04 \x01(\x0b\x32\x0c.sdf.Dataset\x12\x16\n\x0e\x63omputeCluster\x18\x05 \x01(\t\x12\x13\n\x0b\x65ntryScript\x18\x06 \x01(\t\")\n\x10\x45xperimentResult\x12\x15\n\rresultSummary\x18\x01 \x01(\t*8\n\x10\x43omputeCallBacks\x12\x0f\n\x0b\x44UMMY_FIELD\x10\x00\x12\x13\n\x0fPROCESS_RESULTS\x10\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x0fwineguard.proto\x12\x03sdf\"S\n\x0b\x43redentials\x12\x16\n\x0esubscriptionId\x18\x01 \x01(\t\x12\x15\n\rresourceGroup\x18\x02 \x01(\t\x12\x15\n\rworkspaceName\x18\x03 \x01(\t\"@\n\x07\x44\x61taset\x12\x14\n\x0ctrainingFile\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x11\n\tlookupKey\x18\x03 \x01(\t\"?\n\x0b\x45nvironment\x12\x10\n\x08localRun\x18\x01 \x01(\x08\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x10\n\x08reqsPath\x18\x03 \x01(\t\"\xb6\x01\n\x0f\x45xperimentSetup\x12\x1d\n\x03\x65nv\x18\x01 \x01(\x0b\x32\x10.sdf.Environment\x12\x16\n\x0e\x65xperimentName\x18\x02 \x01(\t\x12 \n\x06\x61\x63\x63\x65ss\x18\x03 \x01(\x0b\x32\x10.sdf.Credentials\x12\x1d\n\x07\x64\x61taset\x18\x04 \x01(\x0b\x32\x0c.sdf.Dataset\x12\x16\n\x0e\x63omputeCluster\x18\x05 \x01(\t\x12\x13\n\x0b\x65ntryScript\x18\x06 \x01(\t\")\n\x10\x45xperimentResult\x12\x15\n\rresultSummary\x18\x01 \x01(\t\"\x15\n\x05Layer\x12\x0c\n\x04name\x18\x01 \x01(\t\";\n\x15\x45\x61rthCloudCredentials\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"m\n\x11\x45\x61rthCloudProduct\x12\x13\n\x0b\x66ullVersion\x18\x01 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x1a\n\x06layers\x18\x03 \x03(\x0b\x32\n.sdf.Layer\x12\x12\n\nprojection\x18\x04 \x01(\t\"&\n\x07Request\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05specs\x18\x02 \x01(\x0c\"\x87\x01\n\x10\x45\x61rthCloudConfig\x12*\n\x06\x61\x63\x63\x65ss\x18\x01 \x01(\x0b\x32\x1a.sdf.EarthCloudCredentials\x12(\n\x08products\x18\x02 \x03(\x0b\x32\x16.sdf.EarthCloudProduct\x12\x1d\n\x07request\x18\x03 \x01(\x0b\x32\x0c.sdf.Request\"!\n\x0f\x45\x61rthClouResult\x12\x0e\n\x06result\x18\x01 \x01(\t*8\n\x10\x43omputeCallBacks\x12\x0f\n\x0b\x44UMMY_FIELD\x10\x00\x12\x13\n\x0fPROCESS_RESULTS\x10\x01\x62\x06proto3')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -41,8 +41,8 @@ _COMPUTECALLBACKS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=468,
-  serialized_end=524,
+  serialized_start=876,
+  serialized_end=932,
 )
 _sym_db.RegisterEnumDescriptor(_COMPUTECALLBACKS)
 
@@ -283,14 +283,259 @@ _EXPERIMENTRESULT = _descriptor.Descriptor(
   serialized_end=466,
 )
 
+
+_LAYER = _descriptor.Descriptor(
+  name='Layer',
+  full_name='sdf.Layer',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='sdf.Layer.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=468,
+  serialized_end=489,
+)
+
+
+_EARTHCLOUDCREDENTIALS = _descriptor.Descriptor(
+  name='EarthCloudCredentials',
+  full_name='sdf.EarthCloudCredentials',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='username', full_name='sdf.EarthCloudCredentials.username', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='password', full_name='sdf.EarthCloudCredentials.password', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=491,
+  serialized_end=550,
+)
+
+
+_EARTHCLOUDPRODUCT = _descriptor.Descriptor(
+  name='EarthCloudProduct',
+  full_name='sdf.EarthCloudProduct',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='fullVersion', full_name='sdf.EarthCloudProduct.fullVersion', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='description', full_name='sdf.EarthCloudProduct.description', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='layers', full_name='sdf.EarthCloudProduct.layers', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='projection', full_name='sdf.EarthCloudProduct.projection', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=552,
+  serialized_end=661,
+)
+
+
+_REQUEST = _descriptor.Descriptor(
+  name='Request',
+  full_name='sdf.Request',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='sdf.Request.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='specs', full_name='sdf.Request.specs', index=1,
+      number=2, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b(""),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=663,
+  serialized_end=701,
+)
+
+
+_EARTHCLOUDCONFIG = _descriptor.Descriptor(
+  name='EarthCloudConfig',
+  full_name='sdf.EarthCloudConfig',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='access', full_name='sdf.EarthCloudConfig.access', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='products', full_name='sdf.EarthCloudConfig.products', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='request', full_name='sdf.EarthCloudConfig.request', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=704,
+  serialized_end=839,
+)
+
+
+_EARTHCLOURESULT = _descriptor.Descriptor(
+  name='EarthClouResult',
+  full_name='sdf.EarthClouResult',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='result', full_name='sdf.EarthClouResult.result', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=841,
+  serialized_end=874,
+)
+
 _EXPERIMENTSETUP.fields_by_name['env'].message_type = _ENVIRONMENT
 _EXPERIMENTSETUP.fields_by_name['access'].message_type = _CREDENTIALS
 _EXPERIMENTSETUP.fields_by_name['dataset'].message_type = _DATASET
+_EARTHCLOUDPRODUCT.fields_by_name['layers'].message_type = _LAYER
+_EARTHCLOUDCONFIG.fields_by_name['access'].message_type = _EARTHCLOUDCREDENTIALS
+_EARTHCLOUDCONFIG.fields_by_name['products'].message_type = _EARTHCLOUDPRODUCT
+_EARTHCLOUDCONFIG.fields_by_name['request'].message_type = _REQUEST
 DESCRIPTOR.message_types_by_name['Credentials'] = _CREDENTIALS
 DESCRIPTOR.message_types_by_name['Dataset'] = _DATASET
 DESCRIPTOR.message_types_by_name['Environment'] = _ENVIRONMENT
 DESCRIPTOR.message_types_by_name['ExperimentSetup'] = _EXPERIMENTSETUP
 DESCRIPTOR.message_types_by_name['ExperimentResult'] = _EXPERIMENTRESULT
+DESCRIPTOR.message_types_by_name['Layer'] = _LAYER
+DESCRIPTOR.message_types_by_name['EarthCloudCredentials'] = _EARTHCLOUDCREDENTIALS
+DESCRIPTOR.message_types_by_name['EarthCloudProduct'] = _EARTHCLOUDPRODUCT
+DESCRIPTOR.message_types_by_name['Request'] = _REQUEST
+DESCRIPTOR.message_types_by_name['EarthCloudConfig'] = _EARTHCLOUDCONFIG
+DESCRIPTOR.message_types_by_name['EarthClouResult'] = _EARTHCLOURESULT
 DESCRIPTOR.enum_types_by_name['ComputeCallBacks'] = _COMPUTECALLBACKS
 
 Credentials = _reflection.GeneratedProtocolMessageType('Credentials', (_message.Message,), dict(
@@ -327,6 +572,48 @@ ExperimentResult = _reflection.GeneratedProtocolMessageType('ExperimentResult', 
   # @@protoc_insertion_point(class_scope:sdf.ExperimentResult)
   ))
 _sym_db.RegisterMessage(ExperimentResult)
+
+Layer = _reflection.GeneratedProtocolMessageType('Layer', (_message.Message,), dict(
+  DESCRIPTOR = _LAYER,
+  __module__ = 'wineguard_pb2'
+  # @@protoc_insertion_point(class_scope:sdf.Layer)
+  ))
+_sym_db.RegisterMessage(Layer)
+
+EarthCloudCredentials = _reflection.GeneratedProtocolMessageType('EarthCloudCredentials', (_message.Message,), dict(
+  DESCRIPTOR = _EARTHCLOUDCREDENTIALS,
+  __module__ = 'wineguard_pb2'
+  # @@protoc_insertion_point(class_scope:sdf.EarthCloudCredentials)
+  ))
+_sym_db.RegisterMessage(EarthCloudCredentials)
+
+EarthCloudProduct = _reflection.GeneratedProtocolMessageType('EarthCloudProduct', (_message.Message,), dict(
+  DESCRIPTOR = _EARTHCLOUDPRODUCT,
+  __module__ = 'wineguard_pb2'
+  # @@protoc_insertion_point(class_scope:sdf.EarthCloudProduct)
+  ))
+_sym_db.RegisterMessage(EarthCloudProduct)
+
+Request = _reflection.GeneratedProtocolMessageType('Request', (_message.Message,), dict(
+  DESCRIPTOR = _REQUEST,
+  __module__ = 'wineguard_pb2'
+  # @@protoc_insertion_point(class_scope:sdf.Request)
+  ))
+_sym_db.RegisterMessage(Request)
+
+EarthCloudConfig = _reflection.GeneratedProtocolMessageType('EarthCloudConfig', (_message.Message,), dict(
+  DESCRIPTOR = _EARTHCLOUDCONFIG,
+  __module__ = 'wineguard_pb2'
+  # @@protoc_insertion_point(class_scope:sdf.EarthCloudConfig)
+  ))
+_sym_db.RegisterMessage(EarthCloudConfig)
+
+EarthClouResult = _reflection.GeneratedProtocolMessageType('EarthClouResult', (_message.Message,), dict(
+  DESCRIPTOR = _EARTHCLOURESULT,
+  __module__ = 'wineguard_pb2'
+  # @@protoc_insertion_point(class_scope:sdf.EarthClouResult)
+  ))
+_sym_db.RegisterMessage(EarthClouResult)
 
 
 # @@protoc_insertion_point(module_scope)

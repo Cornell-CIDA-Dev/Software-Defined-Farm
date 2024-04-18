@@ -1,0 +1,25 @@
+FROM ubuntu:20.04
+
+# Get a version of Python 3.8
+RUN apt-get update && apt-get install -y python3.8 python3-pip
+
+# Copy the required packages to the container
+COPY req_files/sharpening_cloud_requirements.txt ../tmp/sharpening_cloud_requirements.txt
+
+# Install the required packages
+RUN pip install -r ../tmp/sharpening_cloud_requirements.txt
+
+# Remove the temp directory
+RUN rm -r ../tmp/
+
+# Copy the AWS credentials and config for local testing
+COPY credentials /root/.aws/credentials
+COPY aws_config /root/.aws/config
+
+# Copy and install the sdf package
+COPY . /app/SoftwareDefinedFarm
+WORKDIR /app/SoftwareDefinedFarm
+RUN pip install -e .
+
+# Move to the sharpening cloud directory
+WORKDIR /app/SoftwareDefinedFarm/sdf/wineguard/sharpeningcloud

@@ -25,7 +25,7 @@ class BaseConfig(UniversalBase):
            :param config: The application configuration.
         """
         # Set the module's co-location status relative to other modules
-        if config['location'] == "local":
+        if 'location' in config and config['location'] == "local":
             self.colocation = True
         else:
             self.colocation = False

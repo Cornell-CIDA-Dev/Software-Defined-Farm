@@ -1,0 +1,18 @@
+{
+ "taskName": "Stub-Point-Task",
+ "dates": [ { "endDate": "06-17-2023",
+              "recurring": false,
+              "startDate": "06-14-2023",
+              "yearRange": [2020, 2023]
+            }
+          ],
+ "layers": [ { "layer": "SDS_LST",
+               "product": "ECO2LSTE.001"
+            }
+          ],
+  "coordinates": [ { "id": "stub1",
+                      "category": "category1",
+                      "latitude": 34.657889,
+                      "longitude": -120.099410 
+                    } ]
+}

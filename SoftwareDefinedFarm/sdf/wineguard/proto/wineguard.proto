@@ -53,3 +53,40 @@ enum ComputeCallBacks {
   DUMMY_FIELD = 0;
   PROCESS_RESULTS = 1;
 }
+
+
+// The specs for interacting with the sharpening cloud, whether by calling
+// NASA or AWS DynamoDB
+message Layer {
+  string name = 1;
+}
+
+// May require rotation in the near future
+// For now, they can be loaded as environment vars or ConfigMap
+message EarthCloudCredentials {
+  string username = 1;
+  string password = 2;
+}
+
+message EarthCloudProduct {
+  string fullVersion = 1;
+  string description = 2;
+  repeated Layer layers = 3;
+  string projection = 4;
+}
+
+// Optional for requesting modules
+message Request {
+  string name = 1;
+  bytes specs = 2;
+}
+
+message EarthCloudConfig {
+  EarthCloudCredentials access = 1;
+  repeated EarthCloudProduct products = 2;
+  Request request = 3;
+}
+
+message EarthClouResult {
+  string result = 1;
+}
