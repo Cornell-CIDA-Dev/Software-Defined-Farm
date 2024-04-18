@@ -1,5 +1,6 @@
 # System imports
 from json import loads, dumps
+from os import environ
 from typing import Any, Dict
 
 
@@ -27,6 +28,11 @@ class SharpeningRequestConfig(BaseConfig):
            :param config: The user-specified config including settings like
                           the EarthCloud preferences, credentials, etc.
         """
+        # Override the the address for the sharpening module with environment
+        # variables before passing to the base config.
+        config['computeHost'] = environ['SHARPENING_MODULE_ADDRESS']
+        config['computePort'] = environ['SHARPENING_MODULE_PORT']
+
         super().__init__(config)
 
         products = []
