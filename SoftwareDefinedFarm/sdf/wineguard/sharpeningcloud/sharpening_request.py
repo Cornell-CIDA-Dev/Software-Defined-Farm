@@ -1,8 +1,11 @@
 # System imports
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date
-from time import time, sleep
+from platform import node
+from os import environ
+from time import ctime, sleep, time
 from typing import Any, Dict
+from socket import gethostname
 
 
 # Local packages
@@ -37,6 +40,19 @@ class SharpeningRequest(ComputeModule):
         super().__init__()
         self.config = config
         self.timer = None
+        if node() == "":
+            hostname = gethostname()
+        else:
+            hostname = node()
+  
+        # self.result_file = hostname + '-sharpening-requests-' + str(date.today())
+        self.result_file = hostname + "-" + environ['TOTAL_EXPERIMENTS']
+        self.result_file += "-sharpening-requests-" + str(date.today())
+        # Get the hour, minute, and second
+        self.result_file += "-" + str(ctime()).split(" ")[3]
+
+        # Boolean to gatekeep how experiments are submitted
+        self.ongoing_experiment = False
 
 
     def set_dispatcher(self, dispatcher: Any):
@@ -76,7 +92,9 @@ class SharpeningRequest(ComputeModule):
         self.log("\nResult: %s\n" % summary)
 
         # Clock the end of an experiment
-        self.timer.stop()
+        self.timer.stop(self.result_file)
+        # Reset the ongoing experiment flag to enable the next experiment to start
+        self.ongoing_experiment = False
 
         return None, None
 
@@ -113,8 +131,10 @@ class SharpeningRequest(ComputeModule):
         # be after some other action (e.g. config back and forth)
         self.set_dispatcher(dispatcher)
 
-        # Run experiment
-        self.submit_experiments(1)
+        # Run experiments
+        # The number of experiments is defined in the container yaml
+        total_experiments = int(environ['TOTAL_EXPERIMENTS'])
+        self.submit_experiments(total_experiments)
 
         # Await interrupt signal.
         while self.exit_signal == False:
@@ -137,10 +157,13 @@ class SharpeningRequest(ComputeModule):
             self.timer = Timer("Timer for " + experiment_name)
             self.log(experiment_name)
             self.timer.start()
+            self.ongoing_experiment = True
             self.analytics()
-            #timer.stop()
-            self.log("Sleeping for %d seconds\n" % TEN_SECONDS)
-            sleep(TEN_SECONDS)
+            while self.ongoing_experiment and not(self.exit_signal):
+                sleep_time = int(TEN_SECONDS/2)
+                self.log("Ongoing experiment %s" % experiment_number)
+                self.log("Sleeping for %d seconds before next one\n" % sleep_time)
+                sleep(sleep_time)
 
 
     def analytics(self):

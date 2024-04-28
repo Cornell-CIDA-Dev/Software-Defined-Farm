@@ -44,11 +44,11 @@ class Timer(ContextDecorator):
 
     def stop(self,
              path: str = None,
-             call: Any = None) -> float:
+             is_final_experiment: bool = False) -> float:
         """
            Stop the timer, and report the elapsed time
            :param path: The path (if any) where to save the timing.
-           :param call: The call that is being timed.
+           :param is_final_experiment: Determines how the final write occurs
         """
         if self._start_time is None:
             raise TimerError(f"Timer is not running. Use .start() to start it")
@@ -59,9 +59,9 @@ class Timer(ContextDecorator):
 
         if path:
             base_file = path.split("/")
-            base_file = base_file[len(base_file)-1]
-            with open("results_" + base_file, "a") as fd:
-                result = call + "," + str(elapsed_time) + "\n"
+            # base_file = base_file[len(base_file)-1]
+            with open(path, "a") as fd:
+                result = str(elapsed_time) + "\n"
                 fd.write(result)
 
         # Report elapsed time

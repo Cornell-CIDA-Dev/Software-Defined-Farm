@@ -1,8 +1,9 @@
 # System imports
 from concurrent.futures import ThreadPoolExecutor
+from os import environ
 from pathlib import Path
-from typing import Any
 from time import sleep
+from typing import Any
 
 
 # Local packages
@@ -113,12 +114,13 @@ class SharpeningCompute(ComputeModule):
         item = dynamodb_service.read(table_name, item)['Item']
         self.log("Item retrieved %s\n" % item)
 
-        # Test downloading an image from S3
+        # Emulate reading and saving images from S3
         bucket_name = "sharpenedhlsimagery"
         object_name = "data/E_20200719.tif"
         local_dest = "local_copy.tif"
-        s3_service = S3Service(self.config)
-        s3_service.read(bucket_name, object_name, local_dest)
+        for _ in range(int(environ['TOTAL_FILES'])):
+            s3_service = S3Service(self.config)
+            s3_service.read(bucket_name, object_name, local_dest)
 
 
         # Encapsulate results and send them back to the requester
