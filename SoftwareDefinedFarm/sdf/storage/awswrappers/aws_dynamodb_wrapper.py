@@ -28,14 +28,14 @@ class DynamoDBService(StorageModule):
                  **kwargs: Any):
         super().__init__()
         self.config = config
-        self.resource = None
+        self.resource = 'dynamodb'
 
 
     def get_resource(self):
         """
            Get a new DynamoDB resource for service calls.
         """
-        return resource('dynamodb')
+        return resource(self.resource)
 
 
     def create_table(self, params: Any):
@@ -118,18 +118,21 @@ class DynamoDBService(StorageModule):
            :param query_filter: The filtering expression to be used.
         """
         table = self.get_table(table_name)
-        response = table.query(filter_exp)
+        response = table.query(query_filter)
         return response
 
 
     def scan_table(self,
                    table_name: str,
-                   scan_filter: Any):
+                   scan_filter: Any = None) :
         """
            Scan an existing table for items with specified attributes.
            :param table_name: The table to be used for the request.
            :param scan_filter: The scanning expression to be used.
         """
         table = self.get_table(table_name)
-        response = table.scan(scan_filter)
+        if scan_filter is None:
+            response = table.scan()
+        else:
+            response = table.scan(FilterExpression = eval(scan_filter))
         return response
