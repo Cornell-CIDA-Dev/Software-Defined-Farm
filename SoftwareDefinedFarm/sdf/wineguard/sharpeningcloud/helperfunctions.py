@@ -15,6 +15,12 @@ from shapely.geometry import box
 from rasterio.io import MemoryFile
 from rasterio.mask import mask
 
+
+__author__ = "Fernando Emiliano Romero Galvan"
+__email__ = "fer36@cornell.edu"
+__credits__ = ["Fernando Emiliano Romero Galvan"]
+
+
 def is_valid_date(date : str) -> bool :
     '''Checks if a string is a valid date.
     input:

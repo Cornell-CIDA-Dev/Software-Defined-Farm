@@ -12,6 +12,10 @@ from matplotlib.colors import rgb2hex, LinearSegmentedColormap
 from matplotlib.cm import get_cmap
 from PIL import Image
 
+__author__ = "Fernando Emiliano Romero Galvan"
+__email__ = "fer36@cornell.edu"
+__credits__ = ["Fernando Emiliano Romero Galvan"]
+
 class AutoMap:
     '''Class to generate maps from raster files.'''
     def __init__(self,
