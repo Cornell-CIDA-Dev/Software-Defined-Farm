@@ -352,4 +352,3 @@ def extract_boundingbox(bounds : list[float],
 
 def extract_bbox_centroid(bbox : list[float]) -> tuple[float, float] :
     return (bbox[0] + bbox[2])/2, (bbox[1] + bbox[3])/2
-

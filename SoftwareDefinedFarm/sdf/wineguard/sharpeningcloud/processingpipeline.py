@@ -187,9 +187,9 @@ class ProcessingPipeline() :
         t = df.reset_index()
         t = t.sort_values(by='date')
 
-        plt.plot(t['date'], t['mean'], label='Mean', color='blue')
-        plt.plot(t['date'], t['mq'], label='Median', color='blue', linestyle='dashed')
-        plt.fill_between(t['date'], t['lq'], t['uq'], alpha=0.1, color='blue', label = 'IQR')
+        plt.plot(t['date'], t['mean'], label='Mean', color='red')
+        plt.plot(t['date'], t['mq'], label='Median', color='cyan', linestyle='dashed')
+        plt.fill_between(t['date'], t['lq'], t['uq'], alpha=0.3, color='blue', label = 'IQR')
         plt.fill_between(t['date'], t['min'], t['max'], alpha=0.1, color='blue', label = 'Min/Max')
 
         tick_labels = tuple(t['date'])
@@ -202,7 +202,8 @@ class ProcessingPipeline() :
         plt.tight_layout()
 
         img = BytesIO()
-        plt.savefig(img, format='jpg', dpi=1200)
+        # plt.savefig(img, format='jpg', dpi=1200)
+        plt.savefig(img, format='pdf', dpi=1200)
         img.seek(0)
         return img
 
@@ -246,7 +247,7 @@ class ProcessingPipeline() :
 
             df = hf.raster_to_stats(stacked_raster, metrics)
             graph = self.metrics_grapher(df, metric.upper(), 'Values', f'{metrics}_graph.jpg')
-            dates = f"{datetime.fromtimestamp(self.date_range[0]).strftime("%Y%m%d")}_to_{datetime.fromtimestamp(self.date_range[1]).strftime("%Ym%d")}"
+            dates = f"{datetime.fromtimestamp(self.date_range[0]).strftime("%Y%m%d")}_to_{datetime.fromtimestamp(self.date_range[1]).strftime("%Y%m%d")}"
             output_fname = f'Timeseries_{metrics}_{dates}.jpg'
             self.upload_image_to_s3_bucket(self.output_bucket, output_fname, graph)
 
@@ -257,7 +258,7 @@ class ProcessingPipeline() :
  
         for metric, statistics in statistical_summary_rasters.items() :
             for stat, raster in statistics.items() :
-                dates = f"{datetime.fromtimestamp(self.date_range[0]).strftime("%Y%m%d")}_to_{datetime.fromtimestamp(self.date_range[1]).strftime("%Ym%d")}"
+                dates = f"{datetime.fromtimestamp(self.date_range[0]).strftime("%Y%m%d")}_to_{datetime.fromtimestamp(self.date_range[1]).strftime("%Y%m%d")}"
                 output_fname = f"Map_{metric}_{stat}_{dates}.jpg"
                 map = AutoMap(self.api_keys['mapbox']['api_token'],
                               metric,
@@ -273,7 +274,6 @@ def main() :
 
     parser = argparse.ArgumentParser(description='ET Satellite Imgagery Processing Pipeline.')
 
-    parser.add_argument('-r', '--raster_s3_bucket', type = str, help = 'Path to S3 bucket.')
     parser.add_argument('-p', '--vineyard_polygon_filepath', type = str, help = "Filepath to (.geojson) vineyard boundaries.")
     parser.add_argument('-s', '--date_start', type = str, help = 'Date range for satellite imagery. Format: YYYYMMDD')
     parser.add_argument('-e', '--date_end', type = str, help = 'Date range for satellite imagery. Format: YYYYMMDD')
