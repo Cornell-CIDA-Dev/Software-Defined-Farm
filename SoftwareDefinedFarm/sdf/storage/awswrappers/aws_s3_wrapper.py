@@ -33,6 +33,32 @@ class S3Service(StorageModule):
         return client('s3')
 
 
+    def write_from_filestream(self,
+                       filestream: Any,
+                       bucket_name: str,
+                       object_name: str) :
+          """Upload a file stream to S3.
+             :param filestream: The file stream to upload.
+             :param bucket_name: The bucket to upload to.
+             :param object_name: The object name to assign to the file in bucket.
+          """
+          client = self.get_client()
+          client.upload_fileobj(filestream,
+                                bucket_name,
+                                object_name)
+
+    def get_filestream(self,
+                   bucket_name: str,
+                   object_name: str) :
+          """Stream a file from S3.
+           :param bucket_name: The bucket to read from.
+           :param object_name: The object name to retrieve.
+          """
+          client = self.get_client()
+          return client.get_object(Bucket=bucket_name,
+                                   Key=object_name)['Body']
+
+
     def read(self,
              bucket_name: str,
              object_name: str,
@@ -48,7 +74,7 @@ class S3Service(StorageModule):
 
 
     def write(self,
-              file_name,
+              file_name : str,
               bucket_name: str,
               object_name: str=None):
         """
