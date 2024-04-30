@@ -202,7 +202,6 @@ class ProcessingPipeline() :
         plt.tight_layout()
 
         img = BytesIO()
-        # plt.savefig(img, format='jpg', dpi=1200)
         plt.savefig(img, format='pdf', dpi=1200)
         img.seek(0)
         return img
@@ -258,7 +257,7 @@ class ProcessingPipeline() :
  
         for metric, statistics in statistical_summary_rasters.items() :
             for stat, raster in statistics.items() :
-                dates = f"{datetime.fromtimestamp(self.date_range[0]).strftime("%Y%m%d")}_to_{datetime.fromtimestamp(self.date_range[1]).strftime("%Y%m%d")}"
+                dates = f"{datetime.fromtimestamp(self.date_range[0]).strftime(r'%Y%m%d')}_to_{datetime.fromtimestamp(self.date_range[1]).strftime(r'%Y%m%d')}"
                 output_fname = f"Map_{metric}_{stat}_{dates}.jpg"
                 map = AutoMap(self.api_keys['mapbox']['api_token'],
                               metric,
