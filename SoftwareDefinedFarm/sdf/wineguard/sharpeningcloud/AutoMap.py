@@ -12,6 +12,8 @@ from matplotlib.colors import rgb2hex, LinearSegmentedColormap
 from matplotlib.cm import get_cmap
 from PIL import Image
 
+from typing import List, Tuple
+
 __author__ = "Fernando Emiliano Romero Galvan"
 __email__ = "fer36@cornell.edu"
 __credits__ = ["Fernando Emiliano Romero Galvan"]
@@ -100,7 +102,7 @@ class AutoMap:
 
     @staticmethod
     def get_color(x : float,
-                  ramp : str = 'viridis') -> list[int]:
+                  ramp : str = 'viridis') -> Tuple[int]:
         '''Returns a color from a color ramp.
         input:
             - x: float
@@ -122,9 +124,9 @@ class AutoMap:
 
     ### Bounding Box Stuff
     @staticmethod
-    def reproject_boundingbox(bbox : list[float],
+    def reproject_boundingbox(bbox : List[float],
                               source_crs : 'str' ,
-                              target_crs : str = 'EPSG:4326') -> list[float]:
+                              target_crs : str = 'EPSG:4326') -> Tuple[float]:
         '''Reprojects a bounding box.
         Input:
             - bbox: list
@@ -143,7 +145,7 @@ class AutoMap:
 
 
     @staticmethod
-    def extract_boundingbox(bounds : list[float]) -> list[float] :
+    def extract_boundingbox(bounds : List[float]) -> Tuple[float] :
         '''Extracts the bounding box from a raster file.
         Input:
             - bounds: list
@@ -158,7 +160,7 @@ class AutoMap:
 
 
     @staticmethod
-    def extract_bbox_centroid(bbox : list[float]) -> list[float, float] :
+    def extract_bbox_centroid(bbox : List[float]) -> Tuple[float, float] :
         '''Extracts the centroid of a bounding box.
         Input:
             - bbox: list

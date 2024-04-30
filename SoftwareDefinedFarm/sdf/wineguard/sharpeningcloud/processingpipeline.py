@@ -18,6 +18,8 @@ from shapely.geometry import Polygon, Point
 from io import BytesIO
 from AutoMap import AutoMap
 
+from typing import List, Tuple
+
 __author__ = "Fernando Emiliano Romero Galvan"
 __email__ = "fer36@cornell.edu"
 __credits__ = ["Fernando Emiliano Romero Galvan"]
@@ -25,7 +27,7 @@ __credits__ = ["Fernando Emiliano Romero Galvan"]
 class ProcessingPipeline() :
     '''Class to process raster files.'''
     def __init__(self,
-                 date_range: tuple[datetime, datetime],
+                 date_range: Tuple[datetime, datetime],
                  polygon_filepath : str,
                  api_keys : dict,
                  dynamodb : str = "Images_TestTable",
@@ -51,7 +53,7 @@ class ProcessingPipeline() :
         return blob.open()
 
 
-    def get_images_dynamodb(self) -> list[str]:
+    def get_images_dynamodb(self) -> List[str]:
         '''Gets a list of images from a dynamodb table.
         Example JSON:
         {'timestamp': 1595142000,
@@ -126,7 +128,7 @@ class ProcessingPipeline() :
     @staticmethod
     def point_spatial_sample(sampling_points : gpd.GeoDataFrame,
                              data : rio.io.DatasetReader,
-                             column_headers : list = None,
+                             column_headers : List = None,
                              ) -> gpd.GeoDataFrame:
         """
         Extracts raster values at point locations from a vector file.
@@ -152,7 +154,7 @@ class ProcessingPipeline() :
         return spec_df
 
 
-    def image_collection(self) -> list[str, str, rio.io.DatasetReader] :
+    def image_collection(self) :
         '''Generates a collection of images.'''
         for record in self.dynamodb_items :
             record_timestamp = datetime.fromtimestamp(int(record['timestamp'])).strftime('%Y%m%d')
@@ -165,7 +167,7 @@ class ProcessingPipeline() :
     def upload_image_to_s3_bucket(self,
                                     bucket : str,
                                     output_fname : str,
-                                    image : plt) :
+                                    image : plt) -> None :
             '''Uploads the results to Google Cloud Storage.
             Input:
                 - bucket : str, name of the bucket to upload the image to.
@@ -207,7 +209,7 @@ class ProcessingPipeline() :
         return img
 
 
-    def process_images(self) :
+    def process_images(self) -> None :
         polygons = gpd.read_file(self.polygon_filepath)
         ic = self.image_collection()
         image_count = 0
