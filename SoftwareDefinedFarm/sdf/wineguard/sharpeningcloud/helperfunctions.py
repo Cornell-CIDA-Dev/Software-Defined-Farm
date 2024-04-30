@@ -96,7 +96,7 @@ def normalize_minmax(array : np.ndarray) -> np.ndarray :
     return normalized_array
 
 
-def get_color(x : float, ramp : str = 'viridis') -> tuple[int]:
+def get_color(x : float, ramp : str = 'viridis') -> list[int]:
     '''Returns a color from a color ramp.
     input:
         - x: float
@@ -257,7 +257,7 @@ def stack_rasters(rasters : list,
 
 def clip_raster(raster : rio.DatasetReader,
                 polygons : gpd.GeoDataFrame,
-                nodata = np.nan) -> tuple[np.array, dict] :
+                nodata = np.nan) -> list[np.array, dict] :
     '''Masks a raster with a polygon.
     Input:
         - raster: Rasterio.io.DatasetReader
@@ -316,7 +316,7 @@ def write_raster(raster : rio.io.DatasetReader, meta_data : dict,
 def extract_boundingbox(bounds : list[float],
                         source_crs : str = '',
                         target_crs : str  = '',
-                        reproject = False) -> tuple[float] :
+                        reproject = False) -> list[float] :
     '''Extracts the bounding box from a raster file.
     Input:
         - bounds: list
@@ -327,7 +327,7 @@ def extract_boundingbox(bounds : list[float],
         - bbox: tuple
     '''
     def reproject_boundingbox(bbox : list[float], source_crs : 'str' ,
-                              target_crs : str = 'EPSG:4326') -> tuple [float]:
+                              target_crs : str = 'EPSG:4326') -> list[float]:
         '''Reprojects a bounding box.
         Input:
             - bbox: list
@@ -335,7 +335,6 @@ def extract_boundingbox(bounds : list[float],
             - target_crs: string
         Output:
             - bbox: tuple'''
-        # bbox_df = pd.DataFrame({'geometry': [box(*bbox)]})
         bbox_gdf = gpd.GeoDataFrame({'geometry' : [box(*bbox)]}, geometry='geometry')
         bbox_gdf.crs = {'init' : source_crs}
         bbox_gdf = bbox_gdf.to_crs(target_crs)
@@ -348,5 +347,5 @@ def extract_boundingbox(bounds : list[float],
     return minx, miny, maxx, maxy
 
 
-def extract_bbox_centroid(bbox : list[float]) -> tuple[float, float] :
+def extract_bbox_centroid(bbox : list[float]) -> list[float, float] :
     return (bbox[0] + bbox[2])/2, (bbox[1] + bbox[3])/2
