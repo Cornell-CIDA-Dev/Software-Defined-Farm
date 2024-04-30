@@ -13,6 +13,8 @@ from shapely.geometry import box
 from rasterio.io import MemoryFile
 from rasterio.mask import mask
 
+from typing import Union, Tuple, List
+
 
 __author__ = "Fernando Emiliano Romero Galvan"
 __email__ = "fer36@cornell.edu"
@@ -67,7 +69,9 @@ def extract_vegetationmetric(filepath : str) -> str :
         return None
 
 
-def custom_cmap(colors : list, n = 100, reverse = False) -> LinearSegmentedColormap :
+def custom_cmap(colors : list,
+                n = 100,
+                reverse = False) -> LinearSegmentedColormap :
     '''Creates a custom colormap.
     input:
         - colors: list of tuples
@@ -96,7 +100,8 @@ def normalize_minmax(array : np.ndarray) -> np.ndarray :
     return normalized_array
 
 
-def get_color(x : float, ramp : str = 'viridis') -> list[int]:
+def get_color(x : float,
+              ramp : str = 'viridis') -> List[int] :
     '''Returns a color from a color ramp.
     input:
         - x: float
@@ -165,7 +170,7 @@ def raster_to_stats(raster : rio.io.DatasetReader,
 
 def raster_stack_statistics(raster : rio.DatasetReader,
                             stat : str,
-                            nodata : int | float = np.nan) -> np.array :
+                            nodata : Union[int, float] = np.nan) -> np.array :
     '''Calculates statistics specificed in the statistics list.'''
     raster_array = raster.read()
     raster_meta = raster.meta
@@ -197,8 +202,8 @@ def raster_stack_statistics(raster : rio.DatasetReader,
     yield memory_raster(result, raster_meta)
 
 
-def merge_rasters(raster_list : list[str],
-                  nodata : np.nan = np.nan) :
+def merge_rasters(raster_list : List[str],
+                  nodata : np.nan = np.nan) -> None :
     '''Merges a list of rasters into a single raster.
     Input:
         - raster_list: list of rasterio.io.DatasetReader
@@ -228,8 +233,8 @@ def merge_rasters(raster_list : list[str],
 
 
 def stack_rasters(rasters : list,
-                  index : list[str] | list[int],
-                  nodata : np.nan = np.nan) :
+                  index : Union[List[str], List[int]],
+                  nodata : np.nan = np.nan) -> rio.io.DatasetReader :
     '''Stacks a list of rasters into a single raster.
     Input:
         - rasters : list of rasterio.io.DatasetReader
@@ -257,7 +262,7 @@ def stack_rasters(rasters : list,
 
 def clip_raster(raster : rio.DatasetReader,
                 polygons : gpd.GeoDataFrame,
-                nodata = np.nan) -> list[np.array, dict] :
+                nodata = np.nan) -> Tuple[np.array, dict] :
     '''Masks a raster with a polygon.
     Input:
         - raster: Rasterio.io.DatasetReader
@@ -283,7 +288,7 @@ def clip_raster(raster : rio.DatasetReader,
 
 def memory_raster(raster : np.array,
                   meta_data : dict,
-                  band_names : list[str] | list[int] = None) -> rio.io.DatasetReader :
+                  band_names : Union[List[str], List[int]] = None) -> rio.io.DatasetReader :
     '''Creates a raster in memory.
     input:
         - raster: numpy.ndarray
@@ -299,7 +304,8 @@ def memory_raster(raster : np.array,
         return memfile.open()
 
 
-def write_raster(raster : rio.io.DatasetReader, meta_data : dict,
+def write_raster(raster : rio.io.DatasetReader,
+                 meta_data : dict,
                  output_filepath : str) -> None:
     '''Writes a raster to a file.
     input:
@@ -313,10 +319,10 @@ def write_raster(raster : rio.io.DatasetReader, meta_data : dict,
         dst.write(raster)
 
 
-def extract_boundingbox(bounds : list[float],
+def extract_boundingbox(bounds : List[float],
                         source_crs : str = '',
                         target_crs : str  = '',
-                        reproject = False) -> list[float] :
+                        reproject = False) -> Tuple[float] :
     '''Extracts the bounding box from a raster file.
     Input:
         - bounds: list
@@ -326,8 +332,9 @@ def extract_boundingbox(bounds : list[float],
     Output:
         - bbox: tuple
     '''
-    def reproject_boundingbox(bbox : list[float], source_crs : 'str' ,
-                              target_crs : str = 'EPSG:4326') -> list[float]:
+    def reproject_boundingbox(bbox : List[float],
+                              source_crs : 'str' ,
+                              target_crs : str = 'EPSG:4326') -> Tuple[float]:
         '''Reprojects a bounding box.
         Input:
             - bbox: list
@@ -347,5 +354,5 @@ def extract_boundingbox(bounds : list[float],
     return minx, miny, maxx, maxy
 
 
-def extract_bbox_centroid(bbox : list[float]) -> list[float, float] :
+def extract_bbox_centroid(bbox : List[float]) -> Tuple[float, float] :
     return (bbox[0] + bbox[2])/2, (bbox[1] + bbox[3])/2
