@@ -247,7 +247,7 @@ class ProcessingPipeline() :
 
             df = hf.raster_to_stats(stacked_raster, metrics)
             graph = self.metrics_grapher(df, metric.upper(), 'Values', f'{metrics}_graph.jpg')
-            dates = f"{datetime.fromtimestamp(self.date_range[0]).strftime("%Y%m%d")}_to_{datetime.fromtimestamp(self.date_range[1]).strftime("%Y%m%d")}"
+            dates = f"{datetime.fromtimestamp(self.date_range[0]).strftime(r'%Y%m%d')}_to_{datetime.fromtimestamp(self.date_range[1]).strftime(r'%Y%m%d')}"
             output_fname = f'Timeseries_{metrics}_{dates}.jpg'
             self.upload_image_to_s3_bucket(self.output_bucket, output_fname, graph)
 

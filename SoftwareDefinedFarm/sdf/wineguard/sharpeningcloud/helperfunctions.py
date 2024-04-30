@@ -1,7 +1,5 @@
 from datetime import datetime
 from re import compile, search, IGNORECASE
-from os.path import join
-from shutil import copy, move
 
 from matplotlib.colors import rgb2hex, LinearSegmentedColormap
 from matplotlib.cm import get_cmap
