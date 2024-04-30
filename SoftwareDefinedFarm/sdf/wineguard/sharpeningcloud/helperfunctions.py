@@ -273,7 +273,10 @@ def clip_raster(raster : rio.DatasetReader,
     '''
     polygons = raster_poly_crs_check(raster, polygons)
 
+    print("Print raster %s\n" % raster.crs)
+    print("Print geometries %s\n" % polygons.crs)
     clipped_raster, clipped_transform = mask(raster, [polygons.geometry[0]], crop=True)
+    print("Helloooo clip\n")
     clipped_raster = np.where(clipped_raster==0, np.nan, clipped_raster)
     clipped_meta = raster.meta.copy()
     clipped_meta.update({
@@ -297,10 +300,13 @@ def memory_raster(raster : np.array,
         - raster: rasterio.io.DatasetReader
     '''
     with MemoryFile() as memfile:
+        print("MemFile open!\n")
         with memfile.open(**meta_data) as dataset :
+            print("Dataset open!\n")
             if band_names is not None :
                 dataset.descriptions = band_names
             dataset.write(raster)
+            print("Written dataset")
         return memfile.open()
 
 

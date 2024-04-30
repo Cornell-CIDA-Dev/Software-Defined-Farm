@@ -1,3 +1,9 @@
+# System imports
+from typing import Union
+from sys import settrace
+
+settrace
+
 ### Local Packages
 # Local packages - image processing
 import helperfunctions as hf
@@ -97,7 +103,7 @@ class ProcessingPipeline() :
 
     @staticmethod
     def generate_grid(points : gpd.GeoDataFrame,
-                      target_resolution : int | float) -> gpd.GeoDataFrame :
+                      target_resolution : Union[int,float]) -> gpd.GeoDataFrame :
         '''Resamples the point's spatial distribution to the raster resolution.
         Intput:
             - points : geopandas dataframe, points to resample
@@ -218,6 +224,7 @@ class ProcessingPipeline() :
         for t, m, filestream in ic :
             image_count += 1
             raster = hf.clip_raster(filestream, polygons)
+            print("Raster %s\n" % raster)
 
             if m in clipped_images.keys() :
                 clipped_images[m].append((t, raster))
@@ -227,11 +234,14 @@ class ProcessingPipeline() :
         if image_count == 1:
             return clipped_images
 
+        print("Clipped images %\n" % clipped_images)
+
         stacked_rasters = {}
         for metric, images in clipped_images.items():
             timestamps, rasters = zip(*images)
             stacked_raster = hf.stack_rasters(rasters, timestamps)
             stacked_rasters[metric] = stacked_raster
+        print("Stacked raster %s\n" % stacked_rasters)
 
         # TODO: Only uncomment if we want to store processing results
         ### Start
@@ -291,8 +301,9 @@ def main() :
         elif args.date_start > args.date_end :
             raise ValueError('Invalid date range.')
         else :
-            date_range = (int(datetime(args.date_start).timestamp()),
-                          int(datetime(args.date_end).timestamp()))
+            date_start = int(datetime.strptime(args.date_start, '%Y%m%d').timestamp())
+            date_end = int(datetime.strptime(args.date_end, '%Y%m%d').timestamp())
+            date_range = (date_start, date_end)
 
     ProcessingPipeline(date_range,
                        args.vineyard_polygon_filepath,
