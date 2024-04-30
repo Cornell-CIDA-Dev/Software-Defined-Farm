@@ -100,7 +100,7 @@ class AutoMap:
 
     @staticmethod
     def get_color(x : float,
-                  ramp : str = 'viridis') -> tuple[int]:
+                  ramp : str = 'viridis') -> list[int]:
         '''Returns a color from a color ramp.
         input:
             - x: float
@@ -124,7 +124,7 @@ class AutoMap:
     @staticmethod
     def reproject_boundingbox(bbox : list[float],
                               source_crs : 'str' ,
-                              target_crs : str = 'EPSG:4326') -> tuple [float]:
+                              target_crs : str = 'EPSG:4326') -> list[float]:
         '''Reprojects a bounding box.
         Input:
             - bbox: list
@@ -143,7 +143,7 @@ class AutoMap:
 
 
     @staticmethod
-    def extract_boundingbox(bounds : list[float]) -> tuple[float] :
+    def extract_boundingbox(bounds : list[float]) -> list[float] :
         '''Extracts the bounding box from a raster file.
         Input:
             - bounds: list
@@ -158,7 +158,7 @@ class AutoMap:
 
 
     @staticmethod
-    def extract_bbox_centroid(bbox : list[float]) -> tuple[float, float] :
+    def extract_bbox_centroid(bbox : list[float]) -> list[float, float] :
         '''Extracts the centroid of a bounding box.
         Input:
             - bbox: list

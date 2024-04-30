@@ -152,7 +152,7 @@ class ProcessingPipeline() :
         return spec_df
 
 
-    def image_collection(self) :
+    def image_collection(self) -> list[str, str, rio.io.DatasetReader] :
         '''Generates a collection of images.'''
         for record in self.dynamodb_items :
             record_timestamp = datetime.fromtimestamp(int(record['timestamp'])).strftime('%Y%m%d')
