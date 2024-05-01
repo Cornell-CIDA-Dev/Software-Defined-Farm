@@ -57,6 +57,9 @@ class Timer(ContextDecorator):
         elapsed_time = perf_counter() - self._start_time
         self._start_time = None
 
+        # Add the time for downloading images in S3 as reported by ferg
+        elapsed_time += 121
+
         if path:
             base_file = path.split("/")
             # base_file = base_file[len(base_file)-1]
